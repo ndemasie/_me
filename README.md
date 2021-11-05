@@ -1,0 +1,1 @@
+Personal repo to hold my scripts, aliases, .dotfiles, functions, or anything else I find useful.
