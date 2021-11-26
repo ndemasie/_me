@@ -1,6 +1,8 @@
 gh() {
+  local owner="ndemasie"
   local cmd="${1:-"-h"}"
   local repo="${2:-"${PWD##*/}"}"
+  local branch
   [ -z $2 ] && branch=$(git rev-parse --abbrev-ref HEAD)
   local page=""
 
@@ -31,5 +33,5 @@ gh() {
   ;;
   esac
 
-  open -a "Firefox" "https://github.com/Stocard/$repo/$page"
-};
+  open -a "Firefox" "https://github.com/$owner/$repo/$page"
+}
