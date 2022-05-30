@@ -8,5 +8,4 @@ path="$(dirname "$input")"
 filename="$(basename "$input")"
 file="$(filename%.*)"
 
-
 /usr/bin/ffmpeg -i "$input" "$path/$file.mp4"
