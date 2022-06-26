@@ -1,3 +1,5 @@
+#!/usr/bin/env bash
+
 gh() {
   local owner="ndemasie"
   local cmd="${1:-"-h"}"

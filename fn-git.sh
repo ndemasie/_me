@@ -1,3 +1,5 @@
+#!/usr/bin/env bash
+
 # delete local branches where remote is :gone
 function gprune() {
   git fetch --prune --quiet;
