@@ -1,0 +1,1 @@
+alias jqq="/Users/nathandemasie/code/jqq"
