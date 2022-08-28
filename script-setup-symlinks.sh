@@ -1,3 +1,3 @@
 #!/usr/bin/env sh
 
-ln -s ./.bash_profile ~/
+ln -s ./dotfiles/.bash_profile ~/.bash_profile
