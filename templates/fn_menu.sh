@@ -216,6 +216,5 @@ readonly GITMOJI=(
 "🚧 WIP"
 )
 
-declare item
-item=$(menu "${GITMOJI[@]}")
+declare item=$(menu "${GITMOJI[@]}")
 echo "selected ${item##* }"
