@@ -1,3 +1,4 @@
+#!/usr/bin/env bash
 
 example_ask_yn() {
   while true; do

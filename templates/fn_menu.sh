@@ -65,10 +65,10 @@ menu() {
   done
   declare options_filtered=()
 
+  get_paged_index() { declare i=$(($page * $PAGE_SIZE + $selected)); [[ "${i}" -lt 0 ]] && echo "0" || echo "$i"; }
+  get_selected_option() { echo "${options_filtered[$(get_paged_index)]:-}"; }
   go_to_home() { printf "\033[$((${CURSOR_POS%;*}+${1:-0}));${2:-0}H" >&2; }
   go_to_search() { go_to_home 0 "$((9+${#search}))"; }
-  get_paged_index() { echo "$(($page * $PAGE_SIZE + $selected))"; }
-  get_selected_option() { echo "${options_filtered[$(get_paged_index)]}"; }
   print_option() { printf "${CLEAR_LINE}${C_RESET} %s\n" "$1" >&2; }
   print_option_selected() { printf "${C_MAGENTA_BG}  %s%s  ${C_RESET}\n" "$1" "${FILL_EMPTY:${#1}}" >&2; }
 
@@ -95,7 +95,7 @@ menu() {
 
     for (( i=0; i<$LIST_LEN; i++ )) {
       declare page_i=$(($page * $PAGE_SIZE + $i))
-      declare option=${options_filtered[$page_i]}
+      declare option="${options_filtered[$page_i]:-}"
       if [[ $page_i == $(get_paged_index) ]]; then
         print_option_selected "$option"
       else
@@ -119,17 +119,20 @@ menu() {
     declare key=$(read_keyboard)
     case "$key" in
       ENTER)
-        go_to_home "$(($HEADER_LEN + $LIST_LEN + $FOOTER_LEN))" 0
-        echo >&2
-        echo "$(get_selected_option)"
-        return
+        declare opt="$(get_selected_option)"
+        [[ "$opt" != "" ]] && {
+          go_to_home "$(($HEADER_LEN + $LIST_LEN + $FOOTER_LEN))" 0
+          echo >&2
+          echo "$opt"
+          return
+        }
         ;;
       UP)
         go_to_home "$(($HEADER_LEN + $selected))"
         print_option "$(get_selected_option)"
 
         ((selected--))
-        [[ "$selected" -lt 0 ]] && selected=$((${#options_filtered[@]} - 1))
+        [[ "$selected" -lt 0 ]] && selected=$(($(min -g $(max -g "${#options_filtered[@]}" 1) $LIST_LEN) - 1))
 
         go_to_home "$(($HEADER_LEN + $selected))"
         print_option_selected "$(get_selected_option)"
@@ -140,7 +143,7 @@ menu() {
         print_option "$(get_selected_option)"
 
         ((selected++))
-        [[ "$selected" -ge ${#options_filtered[@]} ]] && selected=0
+        [[ "$selected" -ge $(min -g "${#options_filtered[@]}" $LIST_LEN) ]] && selected=0
 
         go_to_home "$(($HEADER_LEN + $selected))"
         print_option_selected "$(get_selected_option)"
@@ -157,8 +160,10 @@ menu() {
         draw
         ;;
       BACKSPACE)
-        [[ ${#search} -gt 0 ]] && search="${search:0:((${#search}-1))}"
-        draw
+        [[ "${#search}" -gt 0 ]] && {
+          search="${search:0:((${#search}-1))}"
+          draw
+        }
         ;;
       *)
         page=0
