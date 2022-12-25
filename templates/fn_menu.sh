@@ -1,6 +1,23 @@
 #!/usr/bin/env bash
 
 menu() {
+  readonly C_RESET='\033[0m'
+  readonly C_MAGENTA_BG="\033[45m"
+  readonly CLEAR_LINE="\033[K"
+
+  declare FLAG_SEARCH=false
+  declare FLAG_PAGINATION=false
+
+  # Set flags
+  declare OPTIND OPTARG option
+  while getopts "sp" option; do
+    case "$option" in
+      s) FLAG_SEARCH=true ;;
+      p) FLAG_PAGINATION=true ;;
+    esac
+  done
+  shift $((OPTIND - 1))
+
   echo >&2
 
   get_cursor_position() { declare POS; read -sdR -p $'\033[6n' POS; echo $POS | cut -c3-; }
@@ -38,23 +55,19 @@ menu() {
     esac
   }
 
-  readonly C_RESET='\033[0m'
-  readonly C_MAGENTA_BG="\033[45m"
-  readonly CLEAR_LINE="\033[K"
-
-  readonly OPTIONS=("$@")
-  readonly PAGE_SIZE=10
-  readonly LIST_LEN=$(min -g $PAGE_SIZE ${#OPTIONS[@]})
-  readonly HEADER_LEN=2
-  readonly FOOTER_LEN=2
-  readonly FILL_EMPTY=$({
+  declare OPTIONS=("$@")
+  declare PAGE_SIZE=$([[ $FLAG_PAGINATION == true ]] && echo "10" || echo "${#OPTIONS[@]}")
+  declare LIST_LEN=$(min -g $PAGE_SIZE ${#OPTIONS[@]})
+  declare HEADER_LEN=$([[ $FLAG_SEARCH == true ]] && echo "2" || echo "0")
+  declare FOOTER_LEN=$([[ $FLAG_PAGINATION == true ]] && echo "2" || echo "0")
+  declare FILL_EMPTY=$({
     declare max
     for opt in "${OPTIONS[@]}"; do
       [[ "${#opt}" -gt "$max" ]] && max="${#opt}"
     done
     printf '%*s' $max
   })
-  readonly CURSOR_POS=$(get_cursor_position)
+  declare CURSOR_POS=$(get_cursor_position)
 
   declare selected=0
   declare page=0
@@ -67,8 +80,8 @@ menu() {
 
   get_paged_index() { declare i=$(($page * $PAGE_SIZE + $selected)); [[ "${i}" -lt 0 ]] && echo "0" || echo "$i"; }
   get_selected_option() { echo "${options_filtered[$(get_paged_index)]:-}"; }
-  go_to_home() { printf "\033[$((${CURSOR_POS%;*}+${1:-0}));${2:-0}H" >&2; }
-  go_to_search() { go_to_home 0 "$((9+${#search}))"; }
+  go_to() { printf "\033[$((${CURSOR_POS%;*}+${1:-0}));${2:-0}H" >&2; }
+  go_to_search() { go_to 0 "$((9+${#search}))"; }
   print_option() { printf "${CLEAR_LINE}${C_RESET} %s\n" "$1" >&2; }
   print_option_selected() { printf "${C_MAGENTA_BG}  %s%s  ${C_RESET}\n" "$1" "${FILL_EMPTY:${#1}}" >&2; }
 
@@ -89,9 +102,11 @@ menu() {
       selected=$(($visible_count-1))
     fi
 
-    go_to_home 0
-    printf "${CLEAR_LINE}${C_RESET}%s: %s\n" "Search" "$search" >&2
-    printf "${CLEAR_LINE}${C_RESET}\n" >&2
+    go_to
+    if [[ $FLAG_SEARCH == true ]]; then
+      printf "${CLEAR_LINE}${C_RESET}%s: %s\n" "Search" "$search" >&2
+      printf "${CLEAR_LINE}${C_RESET}\n" >&2
+    fi
 
     for (( i=0; i<$LIST_LEN; i++ )) {
       declare page_i=$(($page * $PAGE_SIZE + $i))
@@ -103,14 +118,16 @@ menu() {
       fi
     }
 
-    printf "${CLEAR_LINE}${C_RESET}\n" >&2
-    printf "${CLEAR_LINE}${C_RESET}%s %d-%d / %d\n" \
-      "Results:" \
-      $(( $PAGE_SIZE * $page + 1 )) \
-      $(min -g $(($PAGE_SIZE * ($page+1))) "$options_len") \
-      "$options_len" >&2
+    if [[ $FLAG_PAGINATION == true ]]; then
+      printf "${CLEAR_LINE}${C_RESET}\n" >&2
+      printf "${CLEAR_LINE}${C_RESET}%s %d-%d / %d\n" \
+        "Results:" \
+        $(( $PAGE_SIZE * $page + 1 )) \
+        $(min -g $(($PAGE_SIZE * ($page+1))) "$options_len") \
+        "$options_len" >&2
+    fi
 
-    go_to_search
+    [[ $FLAG_SEARCH == true ]] && go_to_search
   }
 
   draw
@@ -121,54 +138,60 @@ menu() {
       ENTER)
         declare opt="$(get_selected_option)"
         [[ "$opt" != "" ]] && {
-          go_to_home "$(($HEADER_LEN + $LIST_LEN + $FOOTER_LEN))" 0
+          go_to "$(($HEADER_LEN + ${#options_filtered[@]} + $FOOTER_LEN))" 0
           echo >&2
           echo "$opt"
           return
         }
         ;;
       UP)
-        go_to_home "$(($HEADER_LEN + $selected))"
+        go_to "$(($HEADER_LEN + $selected))"
         print_option "$(get_selected_option)"
 
         ((selected--))
-        [[ "$selected" -lt 0 ]] && selected=$(($(min -g $(max -g "${#options_filtered[@]}" 1) $LIST_LEN) - 1))
+        [[ "$selected" -lt 0 ]] && selected=$(max -g $(($(min -g "${#options_filtered[@]}" $LIST_LEN) - 1)) 0)
 
-        go_to_home "$(($HEADER_LEN + $selected))"
+        go_to "$(($HEADER_LEN + $selected))"
         print_option_selected "$(get_selected_option)"
-        go_to_search
+        [ $FLAG_SEARCH == true ] && go_to_search
         ;;
       DOWN)
-        go_to_home "$(($HEADER_LEN + $selected))"
+        go_to "$(($HEADER_LEN + $selected))"
         print_option "$(get_selected_option)"
 
         ((selected++))
         [[ "$selected" -ge $(min -g "${#options_filtered[@]}" $LIST_LEN) ]] && selected=0
 
-        go_to_home "$(($HEADER_LEN + $selected))"
+        go_to "$(($HEADER_LEN + $selected))"
         print_option_selected "$(get_selected_option)"
-        go_to_search
+        [[ $FLAG_SEARCH == true ]] && go_to_search
         ;;
       LEFT)
-        ((page--))
-        [[ "$page" -lt 0 ]] && page=$(divide_round_down ${#options_filtered[@]} $PAGE_SIZE)
-        draw
+        if [[ $FLAG_PAGINATION == true ]]; then
+          ((page--))
+          [[ "$page" -lt 0 ]] && page=$(divide_round_down ${#options_filtered[@]} $PAGE_SIZE)
+          draw
+        fi
         ;;
       RIGHT)
-        ((page++))
-        [[ "$page" -gt "$(divide_round_down ${#options_filtered[@]} $PAGE_SIZE)" ]] && page=0
-        draw
+        if [[ $FLAG_PAGINATION == true ]]; then
+          ((page++))
+          [[ "$page" -gt "$(divide_round_down ${#options_filtered[@]} $PAGE_SIZE)" ]] && page=0
+          draw
+        fi
         ;;
       BACKSPACE)
-        [[ "${#search}" -gt 0 ]] && {
+        if [[ $FLAG_SEARCH == true && "${#search}" -gt 0 ]]; then
           search="${search:0:((${#search}-1))}"
           draw
-        }
+        fi
         ;;
       *)
-        page=0
-        search="${search}${key}"
-        draw
+        if [[ $FLAG_SEARCH == true ]]; then
+          page=0
+          search="${search}${key}"
+          draw
+        fi
         ;;
     esac
   done
@@ -221,5 +244,5 @@ readonly GITMOJI=(
 "🚧 WIP"
 )
 
-declare item=$(menu "${GITMOJI[@]}")
+declare item=$(menu "$@" "${GITMOJI[@]}")
 echo "selected ${item##* }"
