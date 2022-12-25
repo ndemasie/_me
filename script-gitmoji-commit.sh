@@ -429,9 +429,10 @@ main() {
     ticket_description=$(echo "${top_word} - ${REPLY}" | xargs -r)
   fi
 
+  # Compose git info
   if [[ -z $branch_name ]]; then
     branch_name=$(echo "${ticket_type}/${ticket_number}-${ticket_description}" \
-      | sed -E -e 's/:|;|,//g' -E -e 's/ -| -|  / /g' -e 's/ */-/g' \
+      | sed -E -e 's/:|;|,//g' -E -e 's/ -| -|  / /g' -e 's/ +/-/g' \
       | tr '[:upper:]' '[:lower:]' \
     )
   fi
@@ -445,14 +446,13 @@ main() {
   # Confirm
   declare yn_continue=$(ask_yn "Everything look good?")
   echo
-  [[ "${yn_continue}" == "n" ]] && { exit 0; }
+  [[ "${yn_continue}" == "n" ]] && exit 0
 
   log --debug "Skipping git commands while in debug mode" && return 0
 
   # Checkout branch
   if [[ ! "${git_branch}" == "${branch_name}" ]]; then
     log --trace "Checking out new branch ${C_GREEN}${branch_name}${C_RESET}"
-    git reset --quiet
     git checkout -b "${branch_name}"
   fi
 
@@ -461,28 +461,46 @@ main() {
   git add --all
 
   # Unstage prohibited files
-  log --trace "Unstage any exlcude files"
-  { git diff --name-only; git diff --name-only --staged; } \
-    | grep --regex="${GIT_EXCLUDE_REGEX:-}" \
-    | uniq \
-    | xargs -r git reset
+  if [[ -n $GIT_EXCLUDE_REGEX ]]; then
+    log --trace "Unstage any exlcude files"
+    declare prohibited_files="$(git diff --name-only --staged \
+      | grep --regex="${GIT_EXCLUDE_REGEX}" \
+      | uniq)"
+
+    if [[ -n "$prohibited_files" ]]; then
+      git reset "${prohibited_files}"
+      git stash save --include-untracked --message "tmp/${branch_name}" "${prohibited_files}"
+    fi
+  fi
 
   # Commit
   log --trace "Committing with message ${C_GREEN}\"${commit_message}\"${C_RESET}"
   git commit --message "${commit_message}"
 
   # Rebase
-  log --info "Rebasing ${C_GREEN}${GIT_MAIN_BRANCH} => ${branch_name}${C_RESET}"
-  git rebase origin/${GIT_MAIN_BRANCH} || {
-    log --warn "Rebase failed. You will need to resolve the merge conflicts"
-    log --warn "$ git rebase origin/${GIT_MAIN_BRANCH}"
-    git rebase --abort
-    exit 1
-  }
+  declare yn_rebase=$(ask_yn "Rebase ${C_GREEN}origin/${GIT_MAIN_BRANCH}?")
+  if [[ "${yn_rebase}" == "y" ]]; then
+    log --info "Rebasing ${C_GREEN}${GIT_MAIN_BRANCH} => ${branch_name}${C_RESET}"
+    git rebase origin/${GIT_MAIN_BRANCH} || {
+      log --warn "Rebase failed. You will need to resolve the merge conflicts"
+      log --warn "$ git rebase origin/${GIT_MAIN_BRANCH}"
+      git rebase --abort
+      exit 1
+    }
+  fi
 
   # Publish
   log --info "Publishing branch ${C_GREEN}${branch_name}${C_RESET}"
   git push origin --set-upstream "${branch_name}"
+
+  # Reapply stash
+  if [[ -n $GIT_EXCLUDE_REGEX ]]; then
+    git stash list \
+      | grep "tmp/${branch_name}" \
+      | cut -d ':' -f 1 \
+      | head -n1 \
+      | xargs -r git stash pop
+  fi
 
   return 0
 }
