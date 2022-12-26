@@ -515,10 +515,11 @@ main() {
 
   # Reapply stash
   if [[ -n $GIT_EXCLUDE_REGEX ]]; then
+    log --trace "Reapplying stash ${C_GREEN}tmp/${branch_name}${C_RESET}"
     git stash list \
       | grep "tmp/${branch_name}" \
       | cut -d ':' -f 1 \
-      | head -n1 \
+      | head --lines=1 \
       | xargs -r git stash pop
   fi
 
