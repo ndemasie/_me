@@ -6,7 +6,6 @@ menu() {
   readonly CLEAR_LINE="\033[K"
 
   declare FLAG_SEARCH=false
-
   declare FLAG_PAGINATION=false
   declare PAGE_SIZE=100
 
@@ -30,7 +29,7 @@ menu() {
     shift
   done
 
-  echo >&2``
+  echo >&2
 
   get_cursor_position() { declare POS; read -sdR -p $'\033[6n' POS; echo $POS | cut -c3-; }
   min() { printf "%s\n" "${@:2}" | sort "$1" | head -n1; }
@@ -68,7 +67,7 @@ menu() {
   }
 
   declare OPTIONS=("$@")
-  declare LIST_LEN="$(min -n $PAGE_SIZE ${#OPTIONS[@]})"
+  declare LIST_LEN=$(min -n $PAGE_SIZE ${#OPTIONS[@]})
 
   declare HEADER_LEN=$([[ $FLAG_SEARCH == true ]] && echo "2" || echo "0")
   declare FOOTER_LEN=$([[ $FLAG_PAGINATION == true ]] && echo "2" || echo "0")
@@ -120,7 +119,7 @@ menu() {
       printf "${CLEAR_LINE}${C_RESET}\n" >&2
     fi
 
-    for (( i=0; i<"$LIST_LEN"; i++ )) {
+    for (( i=0; i<$LIST_LEN; i++ )) {
       declare page_i=$(($page * $PAGE_SIZE + $i))
       declare option="${options_filtered[$page_i]:-}"
       if [[ $page_i == $(get_paged_index) ]]; then

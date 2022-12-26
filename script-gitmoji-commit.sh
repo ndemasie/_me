@@ -188,6 +188,26 @@ menu() {
   declare FLAG_PAGINATION=true
   declare PAGE_SIZE=10
 
+  # Set flags
+  while true; do
+    case "$1" in
+      -s|--search)
+        FLAG_SEARCH=true
+        ;;
+      -p|--page|--pagination)
+        FLAG_PAGINATION=true
+        if [[ "$2" =~ ^[0-9]{0,2}$ ]]; then
+          PAGE_SIZE=$2
+          shift
+        else
+          PAGE_SIZE=10
+        fi
+        ;;
+      *) break ;;
+    esac
+    shift
+  done
+
   echo >&2
 
   get_cursor_position() { declare POS; read -sdR -p $'\033[6n' POS; echo $POS | cut -c3-; }
@@ -226,8 +246,8 @@ menu() {
   }
 
   declare OPTIONS=("$@")
-  declare PAGE_SIZE=$([[ $FLAG_PAGINATION == true ]] && echo "10" || echo "${#OPTIONS[@]}")
-  declare LIST_LEN=$(min -g $PAGE_SIZE ${#OPTIONS[@]})
+  declare LIST_LEN=$(min -n $PAGE_SIZE ${#OPTIONS[@]})
+
   declare HEADER_LEN=$([[ $FLAG_SEARCH == true ]] && echo "2" || echo "0")
   declare FOOTER_LEN=$([[ $FLAG_PAGINATION == true ]] && echo "2" || echo "0")
   declare FILL_EMPTY=$({
@@ -266,7 +286,7 @@ menu() {
     done
 
     declare options_len="${#options_filtered[@]}"
-    declare visible_count=$(min -g "$options_len" $(($options_len - ($PAGE_SIZE * $page))))
+    declare visible_count=$(min -n "$options_len" $(($options_len - ($PAGE_SIZE * $page))))
 
     if [[ $selected -ge $visible_count ]]; then
       selected=$(($visible_count-1))
@@ -293,7 +313,7 @@ menu() {
       printf "${CLEAR_LINE}${C_RESET}%s %d-%d / %d\n" \
         "Results:" \
         $(( $PAGE_SIZE * $page + 1 )) \
-        $(min -g $(($PAGE_SIZE * ($page+1))) "$options_len") \
+        $(min -n $(($PAGE_SIZE * ($page+1))) "$options_len") \
         "$options_len" >&2
     fi
 
@@ -306,20 +326,20 @@ menu() {
     declare key=$(read_keyboard)
     case "$key" in
       ENTER)
-        declare opt="$(get_selected_option)"
-        [[ "$opt" != "" ]] && {
-          go_to "$(($HEADER_LEN + ${#options_filtered[@]} + $FOOTER_LEN))" 0
+        declare option="$(get_selected_option)"
+        if [[ "$opt" != "" ]]; then
+          go_to "$(($HEADER_LEN + $(min -n ${#options_filtered[@]} $LIST_LEN) + $FOOTER_LEN))" 0
           echo >&2
-          echo "$opt"
+          echo "$option"
           return
-        }
+        fi
         ;;
       UP)
         go_to "$(($HEADER_LEN + $selected))"
         print_option "$(get_selected_option)"
 
         ((selected--))
-        [[ "$selected" -lt 0 ]] && selected=$(max -g $(($(min -g "${#options_filtered[@]}" $LIST_LEN) - 1)) 0)
+        [[ "$selected" -lt 0 ]] && selected=$(max -n $(($(min -n "${#options_filtered[@]}" $LIST_LEN) - 1)) 0)
 
         go_to "$(($HEADER_LEN + $selected))"
         print_option_selected "$(get_selected_option)"
@@ -330,7 +350,7 @@ menu() {
         print_option "$(get_selected_option)"
 
         ((selected++))
-        [[ "$selected" -ge $(min -g "${#options_filtered[@]}" $LIST_LEN) ]] && selected=0
+        [[ "$selected" -ge $(min -n "${#options_filtered[@]}" $LIST_LEN) ]] && selected=0
 
         go_to "$(($HEADER_LEN + $selected))"
         print_option_selected "$(get_selected_option)"
