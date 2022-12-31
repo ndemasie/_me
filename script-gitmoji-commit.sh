@@ -6,20 +6,12 @@ set -o pipefail  # don't hide errors within pipes
 
 # COLORS
 readonly C_RESET='\033[0m'
-readonly C_BOLD="\033[1m"
 
 readonly C_BLACK="\033[30m"
-readonly C_CYAN="\033[36m"
 readonly C_GREEN="\033[32m"
 readonly C_MAGENTA="\033[35m"
-readonly C_RED="\033[31m"
 readonly C_WHITE="\033[37m"
 readonly C_YELLOW="\033[33m"
-
-readonly C_CYAN_LIGHT="\033[96m"
-readonly C_GRAY_LIGHT="\033[97m"
-readonly C_RED_LIGHT="\033[91m"
-readonly C_YELLOW_LIGHT="\033[93m"
 
 readonly C_BLACK_BG="\033[40m"
 readonly C_GREEN_BG="\033[42m"
@@ -398,30 +390,30 @@ main() {
   echo
 
   declare TICKET_NUMBER_REGEXP="[0-9]{$(($TICKET_NUMBER_LEN-1)),$TICKET_NUMBER_LEN}"
+  declare GIT_BRANCH=$(git branch --show-current)
 
-  declare git_branch=$(git branch --show-current)
   declare ticket_type
   declare ticket_number
   declare ticket_description
   declare branch_name
   declare commit_message
 
-  if [[ ! "${git_branch}" == "${GIT_MAIN_BRANCH}" ]]; then
+  if [[ ! "${GIT_BRANCH}" == "${GIT_MAIN_BRANCH}" ]]; then
     log --warn "Not on ${C_GREEN}${GIT_MAIN_BRANCH}${C_RESET} branch"
 
-    declare yn_continue=$(ask_yn "Do you want to continue on ${C_GREEN}${git_branch}${C_RESET}?")
-    if [[ "$yn_continue" == "y" ]]; then
-      branch_name="${git_branch}"
-      ticket_type=$(echo "${git_branch%/*}" | tr '[:lower:]' '[:upper:]')
-      ticket_number=$(echo "${git_branch}" | grep -E --only-matching --regexp "$TICKET_NUMBER_REGEXP")
-    fi
+    declare yn_continue=$(ask_yn "Do you want to continue on ${C_GREEN}${GIT_BRANCH}${C_RESET}?")
     echo
+    if [[ "$yn_continue" == "y" ]]; then
+      branch_name="${GIT_BRANCH}"
+      ticket_type=$(echo "${GIT_BRANCH%/*}" | tr '[:lower:]' '[:upper:]')
+      ticket_number=$(echo "${GIT_BRANCH}" | grep -E --only-matching --regexp "$TICKET_NUMBER_REGEXP")
+    fi
   fi
 
   # Read ticket type
   if [[ -z $ticket_type ]]; then
-    gitmoji="$(menu "${GITMOJI_OPTIONS[@]}")"
-    ticket_type=${gitmoji##* }
+    declare menu_option="$(menu "${GITMOJI_OPTIONS[@]}")"
+    ticket_type=${menu_option##* }
   fi
 
   # Read ticket number
@@ -433,20 +425,22 @@ main() {
 
   # Read ticket description
   if [[ -z $ticket_description ]]; then
-    declare top_word="$({ git diff --name-only; git diff --name-only --staged; git ls-files --others --exclude-standard; } \
-      | sed -E -e 's/\.[^.]*$//' -E -e 's/\/|-|_/\n/g' \
+    declare exclude_words_regexp=$(local IFS="|"; echo "${TOP_WORDS_EXCLUDED[*]}";)
+    declare top_path="$({ git diff --name-only; git diff --name-only --staged; git ls-files --others --exclude-standard; } \
+      | cut -d '/' -f 1,2,3 \
+      | sed -E -e "s/$exclude_words_regexp\///g" -e 's/\//>/g' \
       | sort \
       | uniq --count \
       | sort --sort=numeric --reverse \
       | head --lines=1 \
       | sed -E -e 's/[0-9 ]//g')"
-    top_word="$(tr '[:lower:]' '[:upper:]' <<< ${top_word:0:1})${top_word:1}"
+    top_path="$(tr '[:lower:]' '[:upper:]' <<< ${top_path:0:1})${top_path:1}"
 
     declare GO_UP="\033[A\033[80D"
     printf "${GO_UP}"
-    printf "${C_MAGENTA}  %s #%d: %s - ${C_RESET}" "${ticket_type}" "${ticket_number}" "${top_word}" >&2
+    printf "${C_MAGENTA}  %s #%d: %s - ${C_RESET}" "${ticket_type}" "${ticket_number}" "${top_path}" >&2
     read -r -e
-    ticket_description=$(echo "${top_word} - ${REPLY}" | xargs -r)
+    ticket_description=$(echo "${top_path} - ${REPLY}" | xargs -r)
   fi
 
   # Compose git info
@@ -471,7 +465,7 @@ main() {
   log --debug "Skipping git commands while in debug mode" && return 0
 
   # Checkout branch
-  if [[ ! "${git_branch}" == "${branch_name}" ]]; then
+  if [[ ! "${GIT_BRANCH}" == "${branch_name}" ]]; then
     log --trace "Checking out new branch ${C_GREEN}${branch_name}${C_RESET}"
     git checkout -b "${branch_name}"
   fi
@@ -487,9 +481,9 @@ main() {
       | grep --regex="${GIT_EXCLUDE_REGEX}" \
       | uniq)"
 
-    if [[ -n "$prohibited_files" ]]; then
-      git reset "${prohibited_files}"
-      git stash save --include-untracked --message "tmp/${branch_name}" "${prohibited_files}"
+    if [[ -n "${prohibited_files}" ]]; then
+      echo "${prohibited_files}" | xargs -r git reset
+      echo "${prohibited_files}" | xargs -r git stash push --message "tmp/${branch_name}"
     fi
   fi
 
@@ -499,6 +493,7 @@ main() {
 
   # Rebase
   declare yn_rebase=$(ask_yn "Rebase ${C_GREEN}origin/${GIT_MAIN_BRANCH}?")
+  echo
   if [[ "${yn_rebase}" == "y" ]]; then
     log --info "Rebasing ${C_GREEN}${GIT_MAIN_BRANCH} => ${branch_name}${C_RESET}"
     git rebase origin/${GIT_MAIN_BRANCH} || {
