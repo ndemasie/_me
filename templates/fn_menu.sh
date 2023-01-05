@@ -1,8 +1,10 @@
 #!/usr/bin/env bash
 
 menu() {
-  readonly C_RESET='\033[0m'
-  readonly C_MAGENTA_BG="\033[45m"
+  readonly C_RESET="\033[0m"
+  readonly CURSOR_ON="\033[?25h"
+  readonly CURSOR_OFF="\033[?25l"
+  readonly C_SELECTED="\033[45m" # Magenta Background
   readonly CLEAR_LINE="\033[K"
 
   declare FLAG_SEARCH=false
@@ -29,13 +31,11 @@ menu() {
     shift
   done
 
-  echo >&2
-
+  cursor_on() { printf "${CURSOR_ON}" >&2; }
+  cursor_off() { printf "${CURSOR_OFF}" >&2; }
   get_cursor_position() { declare POS; read -sdR -p $'\033[6n' POS; echo $POS | cut -c3-; }
   min() { printf "%s\n" "${@:2}" | sort "$1" | head -n1; }
   max() { printf "%s\n" "${@:2}" | sort "$1" | tail -n1; }
-  divide_round_up() { echo $((($1 + $2 - 1) / $2)); }
-  divide_round_down() { echo "$(awk "BEGIN {print int($1 / $2)}")"; }
   # TODO: Seems to be and escaping issue where the key must assigned to a value
   # DO: `declare key="$(read_keyboard)"; case "$key" in` ...)
   # DON'T: `case "$(read_keyboard)" in` ...)
@@ -66,9 +66,18 @@ menu() {
     esac
   }
 
+  ensure_space() {
+    declare size=$(stty size)
+    declare pos=$(get_cursor_position)
+    declare diff=$((${size%% *} - ${pos%%;*} - $HEADER_LEN - $LIST_LEN - $FOOTER_LEN))
+    if [[ $diff -le 0 ]]; then
+      for i in $LIST_LEN; do echo >&2; done
+      printf "\033[$((${pos%;*} + $diff - 1));0H${CLEAR_LINE}\n" >&2
+    fi
+  }
+
   declare OPTIONS=("$@")
   declare LIST_LEN=$(min -n $PAGE_SIZE ${#OPTIONS[@]})
-
   declare HEADER_LEN=$([[ $FLAG_SEARCH == true ]] && echo "2" || echo "0")
   declare FOOTER_LEN=$([[ $FLAG_PAGINATION == true ]] && echo "2" || echo "0")
   declare FILL_EMPTY=$({
@@ -78,6 +87,8 @@ menu() {
     done
     printf '%*s' $max
   })
+
+  ensure_space
   declare CURSOR_POS=$(get_cursor_position)
 
   declare selected=0
@@ -89,12 +100,13 @@ menu() {
   done
   declare options_filtered=()
 
-  get_paged_index() { declare i=$(($page * $PAGE_SIZE + $selected)); [[ "${i}" -lt 0 ]] && echo "0" || echo "$i"; }
+  get_paged_index() { echo "$(max -n $(($page * $PAGE_SIZE + $selected)) 0)"; }
   get_selected_option() { echo "${options_filtered[$(get_paged_index)]:-}"; }
+  get_cur_options_len() { echo "$(min -n "${#options_filtered[@]}" $LIST_LEN "$((${#options_filtered[@]} - ($PAGE_SIZE * $page)))")"; }
   go_to() { printf "\033[$((${CURSOR_POS%;*}+${1:-0}));${2:-0}H" >&2; }
   go_to_search() { go_to 0 "$((9+${#search}))"; }
   print_option() { printf "${CLEAR_LINE}${C_RESET} %s\n" "$1" >&2; }
-  print_option_selected() { printf "${C_MAGENTA_BG}  %s%s  ${C_RESET}\n" "$1" "${FILL_EMPTY:${#1}}" >&2; }
+  print_option_selected() { printf "${C_SELECTED}  %s%s  ${C_RESET}\n" "$1" "${FILL_EMPTY:${#1}}" >&2; }
 
   draw() {
     options_filtered=()
@@ -106,12 +118,8 @@ menu() {
       fi
     done
 
-    declare options_len="${#options_filtered[@]}"
-    declare visible_count=$(min -n "$options_len" $(($options_len - ($PAGE_SIZE * $page))))
-
-    if [[ $selected -ge $visible_count ]]; then
-      selected=$(($visible_count-1))
-    fi
+    declare cur_list_len=$(get_cur_options_len)
+    selected=$((($selected + $cur_list_len) % $cur_list_len))
 
     go_to
     if [[ $FLAG_SEARCH == true ]]; then
@@ -133,13 +141,16 @@ menu() {
       printf "${CLEAR_LINE}${C_RESET}\n" >&2
       printf "${CLEAR_LINE}${C_RESET}%s %d-%d / %d\n" \
         "Results:" \
-        $(( $PAGE_SIZE * $page + 1 )) \
-        $(min -n $(($PAGE_SIZE * ($page+1))) "$options_len") \
-        "$options_len" >&2
+        $(($PAGE_SIZE * $page + 1)) \
+        $(min -n $(($PAGE_SIZE * ($page + 1))) "${#options_filtered[@]}") \
+        "${#options_filtered[@]}" >&2
     fi
 
     [[ $FLAG_SEARCH == true ]] && go_to_search
   }
+
+  trap 'cursor_on' RETURN
+  [[ $FLAG_SEARCH == false ]] && cursor_off
 
   draw
   while true; do
@@ -149,7 +160,7 @@ menu() {
       ENTER)
         declare option="$(get_selected_option)"
         if [[ "$opt" != "" ]]; then
-          go_to "$(($HEADER_LEN + $(min -n ${#options_filtered[@]} $LIST_LEN) + $FOOTER_LEN))" 0
+          go_to "$(($HEADER_LEN + $(get_cur_options_len) + $FOOTER_LEN))" 0
           echo >&2
           echo "$option"
           return
@@ -160,7 +171,8 @@ menu() {
         print_option "$(get_selected_option)"
 
         ((selected--))
-        [[ "$selected" -lt 0 ]] && selected=$(max -n $(($(min -n "${#options_filtered[@]}" $LIST_LEN) - 1)) 0)
+        declare cur_list_len=$(get_cur_options_len)
+        selected=$((($selected + $cur_list_len) % $cur_list_len))
 
         go_to "$(($HEADER_LEN + $selected))"
         print_option_selected "$(get_selected_option)"
@@ -171,7 +183,8 @@ menu() {
         print_option "$(get_selected_option)"
 
         ((selected++))
-        [[ "$selected" -ge $(min -n "${#options_filtered[@]}" $LIST_LEN) ]] && selected=0
+        declare cur_list_len=$(get_cur_options_len)
+        selected=$((($selected + $cur_list_len) % $cur_list_len))
 
         go_to "$(($HEADER_LEN + $selected))"
         print_option_selected "$(get_selected_option)"
@@ -180,14 +193,14 @@ menu() {
       LEFT)
         if [[ $FLAG_PAGINATION == true ]]; then
           ((page--))
-          [[ "$page" -lt 0 ]] && page=$(divide_round_down ${#options_filtered[@]} $PAGE_SIZE)
+          [[ "$page" -lt 0 ]] && page=$((${#options_filtered[@]} % $PAGE_SIZE))
           draw
         fi
         ;;
       RIGHT)
         if [[ $FLAG_PAGINATION == true ]]; then
           ((page++))
-          [[ "$page" -gt "$(divide_round_down ${#options_filtered[@]} $PAGE_SIZE)" ]] && page=0
+          [[ "$page" -gt "$((${#options_filtered[@]} % $PAGE_SIZE))" ]] && page=0
           draw
         fi
         ;;
@@ -255,5 +268,6 @@ readonly GITMOJI=(
 "🚧 WIP"
 )
 
+echo
 declare item=$(menu "$@" "${GITMOJI[@]}")
 echo "selected ${item##* }"
