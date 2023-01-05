@@ -1,15 +1,11 @@
 #!/usr/bin/env bash
 
 readonly C_RESET='\e[0m'
-
 readonly C_WHITE="\e[97m"
 readonly C_YELLOW="\e[33m"
-
 readonly C_BLACK_BG="\e[40m"
 readonly C_GREEN_BG="\e[42m"
 readonly C_CYAN_LIGHT_BG="\e[106m"
-readonly C_GREEN_LIGHT_BG="\e[102m"
-readonly C_GRAY_LIGHT_BG="\e[47m"
 readonly C_YELLOW_LIGHT_BG="\e[103m"
 readonly C_RED_BG="\e[41m"
 
