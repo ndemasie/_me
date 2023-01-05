@@ -316,8 +316,8 @@ menu() {
       printf "${CLEAR_LINE}${C_RESET}\n" >&2
       printf "${CLEAR_LINE}${C_RESET}%s %d-%d / %d\n" \
         "Results:" \
-        $(($PAGE_SIZE * $page + 1)) \
-        $(min -n $(($PAGE_SIZE * ($page + 1))) "${#options_filtered[@]}") \
+        "$(($PAGE_SIZE * $page + 1))" \
+        "$(min -n $(($PAGE_SIZE * ($page + 1))) "${#options_filtered[@]}")" \
         "${#options_filtered[@]}" >&2
     fi
 
