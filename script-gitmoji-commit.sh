@@ -211,6 +211,7 @@ menu() {
   get_cursor_position() { declare POS; read -sdR -p $'\033[6n' POS; echo $POS | cut -c3-; }
   min() { printf "%s\n" "${@:2}" | sort "$1" | head -n1; }
   max() { printf "%s\n" "${@:2}" | sort "$1" | tail -n1; }
+  divide_round_down() { echo "$(awk "BEGIN {print int($1 / $2)}")"; }
   # TODO: Seems to be and escaping issue where the key must assigned to a value
   # DO: `declare key="$(read_keyboard)"; case "$key" in` ...)
   # DON'T: `case "$(read_keyboard)" in` ...)
@@ -368,14 +369,14 @@ menu() {
       LEFT)
         if [[ $FLAG_PAGINATION == true ]]; then
           ((page--))
-          [[ "$page" -lt 0 ]] && page=$((${#options_filtered[@]} % $PAGE_SIZE))
+          [[ "$page" -lt 0 ]] && page=$(divide_round_down ${#options_filtered[@]} $PAGE_SIZE)
           draw
         fi
         ;;
       RIGHT)
         if [[ $FLAG_PAGINATION == true ]]; then
           ((page++))
-          [[ "$page" -gt "$((${#options_filtered[@]} % $PAGE_SIZE))" ]] && page=0
+          [[ "$page" -gt "$(divide_round_down ${#options_filtered[@]} $PAGE_SIZE)" ]] && page=0
           draw
         fi
         ;;
