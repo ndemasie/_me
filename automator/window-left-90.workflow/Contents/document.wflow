@@ -3,7 +3,7 @@
 <plist version="1.0">
 <dict>
 	<key>AMApplicationBuild</key>
-	<string>512</string>
+	<string>520</string>
 	<key>AMApplicationVersion</key>
 	<string>2.10</string>
 	<key>AMDocumentVersion</key>
@@ -51,9 +51,7 @@
 				<key>ActionParameters</key>
 				<dict>
 					<key>source</key>
-					<string>tell application "Finder"	set desktopBounds to bounds of window of desktopend tellset desktopLeftWidthOffset to item 1 of desktopBoundsset desktopLeftHeightOffset to item 2 of desktopBoundsset desktopRightWidthOffset to item 3 of desktopBoundsset desktopRightHeightOffset to item 4 of desktopBounds
-
-tell application "System Events"	set curApp to the first process where it is frontmost		tell curApp		set [[null, menuHeight]] to the size of its menu bars		set widthOffset to 100				set positionX to desktopLeftWidthOffset		set positionY to desktopLeftHeightOffset		set sizeWidth to (-desktopLeftWidthOffset - widthOffset)		set sizeHeight to (desktopRightHeightOffset - menuHeight)				tell the front window			set its position to [positionX, positionY]			set its size to [sizeWidth, sizeHeight]		end tell	end tellend tell</string>
+					<string>tell application "Finder"	set desktopBounds to bounds of window of desktopend tellset desktopLeftWidthOffset to item 1 of desktopBoundsset desktopLeftHeightOffset to item 2 of desktopBoundsset desktopRightWidthOffset to item 3 of desktopBoundsset desktopRightHeightOffset to item 4 of desktopBoundstell application "System Events"	set curApp to the first process where it is frontmost		tell curApp		set [[null, menuHeight]] to the size of its menu bars		set widthOffset to 100				set positionX to desktopLeftWidthOffset		set positionY to desktopLeftHeightOffset		set sizeWidth to (-desktopLeftWidthOffset - widthOffset)		set sizeHeight to (desktopRightHeightOffset - menuHeight)				tell the front window			set its position to [positionX, positionY]			set its size to [sizeWidth, sizeHeight]		end tell	end tellend tell</string>
 				</dict>
 				<key>BundleIdentifier</key>
 				<string>com.apple.Automator.RunScript</string>
@@ -107,7 +105,7 @@ end run</string>
 				<key>isViewVisible</key>
 				<integer>1</integer>
 				<key>location</key>
-				<string>351.500000:765.000000</string>
+				<string>351.500000:717.000000</string>
 				<key>nibPath</key>
 				<string>/System/Library/Automator/Run AppleScript.action/Contents/Resources/Base.lproj/main.nib</string>
 			</dict>
