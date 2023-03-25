@@ -1,3 +1,5 @@
+#!/usr/bin/env bash
+
 function close_port_process() {
   local port=$1
   local code=${2:-9}
