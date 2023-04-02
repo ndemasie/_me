@@ -122,7 +122,7 @@
       "int" : 2
     },
     "iCloudSync" : {
-      "int" : 2
+      "int" : 1
     },
     "ignoredSnapAreas" : {
       "int" : 0
@@ -143,7 +143,7 @@
       "string" : "{\"b\":28,\"t\":27,\"id\":0,\"l\":25,\"bl\":13,\"r\":26,\"tl\":15,\"br\":14,\"tr\":16}"
     },
     "manualSpecs" : {
-      "string" : "[{\"shortcut\":{\"keyCode\":116,\"modifierFlags\":786432},\"x\":\"797\",\"display\":-3,\"y\":\"1253\",\"id\":46,\"h\":\"1144\",\"w\":\"1935\",\"loc\":9,\"name\":\"Display Right Top Left\"},{\"shortcut\":{\"keyCode\":121,\"modifierFlags\":786432},\"x\":\"797\",\"display\":-3,\"y\":\"982\",\"id\":50,\"h\":\"1083\",\"w\":\"2560\",\"loc\":9,\"name\":\"Display Right Bottom\"},{\"shortcut\":{\"keyCode\":115,\"modifierFlags\":786432},\"x\":\"-1763\",\"display\":-3,\"y\":\"982\",\"id\":77,\"h\":\"1415\",\"w\":\"2470\",\"loc\":9,\"name\":\"Display Most Left\"}]"
+      "string" : "[{\"shortcut\":{\"keyCode\":116,\"modifierFlags\":786432},\"display\":-3,\"id\":46,\"h\":\"1144\",\"w\":\"1935\",\"name\":\"Display Right Top Left\",\"loc\":5},{\"shortcut\":{\"keyCode\":121,\"modifierFlags\":786432},\"display\":-3,\"id\":50,\"h\":\"1083\",\"w\":\"2560\",\"name\":\"Display Right Bottom\",\"loc\":7},{\"shortcut\":{\"keyCode\":115,\"modifierFlags\":786432},\"display\":-3,\"id\":77,\"h\":\"1415\",\"w\":\"2470\",\"name\":\"Display Most Left\",\"loc\":3}]"
     },
     "maximizeAcrossDisplays" : {
       "int" : 0
@@ -454,6 +454,6 @@
       "modifierFlags" : 1835008
     }
   },
-  "timestamp" : 702123270.79790103,
+  "timestamp" : 702126382.97338998,
   "version" : "140"
 }
