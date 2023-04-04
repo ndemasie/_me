@@ -122,7 +122,7 @@
       "int" : 2
     },
     "iCloudSync" : {
-      "int" : 1
+      "int" : 2
     },
     "ignoredSnapAreas" : {
       "int" : 0
@@ -449,11 +449,15 @@
       "keyCode" : 125,
       "modifierFlags" : 786432
     },
+    "rightHalf" : {
+      "keyCode" : 119,
+      "modifierFlags" : 786432
+    },
     "tile2x2" : {
       "keyCode" : 121,
       "modifierFlags" : 1835008
     }
   },
-  "timestamp" : 702126382.97338998,
+  "timestamp" : 702314918.06951797,
   "version" : "140"
 }
