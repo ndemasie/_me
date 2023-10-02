@@ -9,4 +9,4 @@ for secret in $HOME/_me/secrets/.secrets*(.); do
 done
 
 # Add Python to path
-PATH="$PATH:$(python3 -m site --user-base)/bin"which
+PATH="$PATH:$(python3 -m site --user-base)/bin"
