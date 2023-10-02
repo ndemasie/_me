@@ -2,7 +2,10 @@
 
 ffmpeg_cmd=$(which ffmpeg)
 
-command -v $ffmpeg_cmd >/dev/null 2>&1 || { echo "ffmpeg is not installed"; exit 1; }
+if ! command -v $ffmpeg_cmd &> /dev/null; then
+  echo "ffmpeg is not installed"
+  exit 1
+fi
 
 path="${1:-}"
 output_path="${path%.*}.mp4"
