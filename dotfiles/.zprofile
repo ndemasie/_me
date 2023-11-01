@@ -8,5 +8,10 @@ for secret in $HOME/_me/secrets/.secrets*(.); do
   source $secret;
 done
 
-# Add Python to path
-PATH="$PATH:$(python3 -m site --user-base)/bin"
+# Add Bun to path
+BUN_INSTALL="$HOME/.bun"
+export PATH="$BUN_INSTALL/bin:$PATH"
+
+# Add Python3 to path
+PYTHON_INSTALL=$(python3 -m site --user-base)
+export PATH="$PYTHON_INSTALL/bin:$PATH"
