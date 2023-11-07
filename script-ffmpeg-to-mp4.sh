@@ -1,13 +1,16 @@
 #!/usr/bin/env bash
 
-ffmpeg_cmd=$(which ffmpeg)
+dir=$(dirname "${1:-}")
+filename=$(basename "${1:-}")
+output_file="${filename%.*}.mp4"
 
-if ! command -v $ffmpeg_cmd &> /dev/null; then
-  echo "ffmpeg is not installed"
-  exit 1
+if command -v ffmpeg &> /dev/null; then
+  ffmpeg -i "$dir/$filename" -vcodec h264 -acodec mp2 "$dir/$output_file"
+  exit 0
 fi
 
-path="${1:-}"
-output_path="${path%.*}.mp4"
-
-$ffmpeg_cmd -i "$path" -vcodec h264 -acodec mp2 "$output_path"
+if command -v docker &> /dev/null; then
+  docker run --volume $dir:$dir --workdir $dir \
+    jrottenberg/ffmpeg -i "$dir/$filename" -vcodec h264 -acodec mp2 "$dir/$output_file"
+  exit 0
+fi
