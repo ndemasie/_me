@@ -12,3 +12,4 @@ ln -sf "${HOME}/_me/app/VSCode/snippets/typescript.json" "${HOME}/Library/Applic
 ln -sf "${HOME}/_me/app/VSCode/snippets/typescriptreact.json" "${HOME}/Library/Application Support/Code/User/snippets/typescriptreact.json"
 
 # Rectangle
+# TODO: Find default config path
