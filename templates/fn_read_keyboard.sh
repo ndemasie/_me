@@ -54,7 +54,10 @@ read_keyboard() {
   esac
 }
 
-
-while true; do
-  read_keyboard
-done;
+# DEMO
+# If script called directly
+if [[ "${BASH_SOURCE[0]}" == "${0}" ]]; then
+  while true; do
+    read_keyboard
+  done;
+fi

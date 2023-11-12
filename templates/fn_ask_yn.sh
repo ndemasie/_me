@@ -1,10 +1,15 @@
 #!/usr/bin/env bash
 
-example_ask_yn() {
-  while true; do
-    declare GOTO_TOP="\e[2A"
-    declare print_error
+source "$(dirname "$0")/fn_log.sh"
 
+ask_yn() {
+  local GOTO_TOP="\e[2A"
+  local CLEAR_LINE="\033[K"
+  local C_RESET="\e[0m"
+  local print_error
+  local REPLY
+
+  while true; do
     echo >&2
     [[ -n $print_error ]] && log --warn "Invalid input: \"${print_error}\""  >&2 || echo >&2
     printf "%b${C_RESET}" "$1" >&2
@@ -19,3 +24,9 @@ example_ask_yn() {
 
   echo "${REPLY}" | tr '[:upper:]' '[:lower:]' | cat
 }
+
+# DEMO
+# If script called directly
+if [[ "${BASH_SOURCE[0]}" == "${0}" ]]; then
+  ask_yn "Do you want to continue ?"
+fi

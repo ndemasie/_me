@@ -1,22 +1,22 @@
 #!/usr/bin/env bash
 
-readonly C_RESET='\e[0m'
-readonly C_WHITE="\e[97m"
-readonly C_YELLOW="\e[33m"
-readonly C_BLACK_BG="\e[40m"
-readonly C_GREEN_BG="\e[42m"
-readonly C_CYAN_LIGHT_BG="\e[106m"
-readonly C_YELLOW_LIGHT_BG="\e[103m"
-readonly C_RED_BG="\e[41m"
-
-DEBUG=true
-VERBOSE=true
-
 log() {
-  declare flag=${1:-}
+  local DEBUG=true
+  local VERBOSE=true
+
+  local C_RESET="\e[0m"
+  local C_WHITE="\e[97m"
+  local C_YELLOW="\e[33m"
+  local C_BLACK_BG="\e[40m"
+  local C_GREEN_BG="\e[42m"
+  local C_CYAN_LIGHT_BG="\e[106m"
+  local C_YELLOW_LIGHT_BG="\e[103m"
+  local C_RED_BG="\e[41m"
+
+  local flag=${1:-}
   [[ $flag = -* ]] && shift
 
-  declare message="${1:-}"
+  local message="${1:-}"
    # If not set, read from stdin
   [[ -z "$message" || "$message" == "-" ]] && read -r -e -d '' message
 
@@ -47,9 +47,13 @@ log() {
   return 0
 }
 
-log "Default"
-log --debug "Debug"
-log --trace "Trace"
-log --info "Info"
-log --warn "Warn"
-log --error "Error"
+# DEMO
+# If script called directly
+if [[ "${BASH_SOURCE[0]}" == "${0}" ]]; then
+  log "Default"
+  log --debug "Debug"
+  log --trace "Trace"
+  log --info "Info"
+  log --warn "Warn"
+  log --error "Error"
+fi

@@ -1,15 +1,15 @@
 #!/usr/bin/env bash
 
 menu() {
-  readonly C_RESET="\033[0m"
-  readonly CURSOR_ON="\033[?25h"
-  readonly CURSOR_OFF="\033[?25l"
-  readonly C_SELECTED="\033[45m" # Magenta Background
-  readonly CLEAR_LINE="\033[K"
+  local C_RESET="\033[0m"
+  local CURSOR_ON="\033[?25h"
+  local CURSOR_OFF="\033[?25l"
+  local C_SELECTED="\033[45m" # Magenta Background
+  local CLEAR_LINE="\033[K"
 
-  declare FLAG_SEARCH=false
-  declare FLAG_PAGINATION=false
-  declare PAGE_SIZE=100
+  local FLAG_SEARCH=false
+  local FLAG_PAGINATION=false
+  local PAGE_SIZE=100
 
   # Set flags
   while true; do
@@ -222,53 +222,57 @@ menu() {
   done
 }
 
-readonly GITMOJI=(
-"🐛 BUGFIX"
-"✨ FEATURE"
-"♿️ ACCESSIBILITY"
-"👽️ ALIEN"
-"📈 ANALYTICS"
-"💫 ANIMATION"
-"🏗️  ARCHITECTURE"
-"🛂 AUTHORIZATION"
-"👷 CI"
-"💡 COMMENTS"
-"🔧 CONFIG"
-"🧐 DATA"
-"🗃️  DATABASE"
-"🚀 DEPLOY"
-"⚰️  DEPRECATE"
-"📝 DOCUMENTATION"
-"🚩 FLAG"
-"🩺 HEALTHCHECK"
-"🚑️ HOTFIX"
-"🌐 I18N"
-"🧱 INFRASTRUCTURE"
-"📄 LICENSE"
-"🚨 LINT"
-"🔊 LOGGING"
-"🧵 MULTITHREADING"
-"📦️ PACKAGE"
-"🩹 PATCH"
-"⚡️ PERFORMANCE"
-"♻️  REFACTOR"
-"🔥 REMOVE"
-"🚚 RENAME"
-"📱 RESPONSIVE"
-"🔨 SCRIPT"
-"🔒️ SECURITY"
-"🔍️ SEO"
-"💸 SPONSORSHIP"
-"🎨 STRUCTURE"
-"💄 STYLE"
-"🔖 TAG"
-"🧪 TEST"
-"🏷️  TYPES"
-"✏️  TYPO"
-"🦺 VALIDATION"
-"🚧 WIP"
-)
+# DEMO
+# If script called directly
+if [[ "${BASH_SOURCE[0]}" == "${0}" ]]; then
+  readonly GITMOJI=(
+  "🐛 BUGFIX"
+  "✨ FEATURE"
+  "♿️ ACCESSIBILITY"
+  "👽️ ALIEN"
+  "📈 ANALYTICS"
+  "💫 ANIMATION"
+  "🏗️  ARCHITECTURE"
+  "🛂 AUTHORIZATION"
+  "👷 CI"
+  "💡 COMMENTS"
+  "🔧 CONFIG"
+  "🧐 DATA"
+  "🗃️  DATABASE"
+  "🚀 DEPLOY"
+  "⚰️  DEPRECATE"
+  "📝 DOCUMENTATION"
+  "🚩 FLAG"
+  "🩺 HEALTHCHECK"
+  "🚑️ HOTFIX"
+  "🌐 I18N"
+  "🧱 INFRASTRUCTURE"
+  "📄 LICENSE"
+  "🚨 LINT"
+  "🔊 LOGGING"
+  "🧵 MULTITHREADING"
+  "📦️ PACKAGE"
+  "🩹 PATCH"
+  "⚡️ PERFORMANCE"
+  "♻️  REFACTOR"
+  "🔥 REMOVE"
+  "🚚 RENAME"
+  "📱 RESPONSIVE"
+  "🔨 SCRIPT"
+  "🔒️ SECURITY"
+  "🔍️ SEO"
+  "💸 SPONSORSHIP"
+  "🎨 STRUCTURE"
+  "💄 STYLE"
+  "🔖 TAG"
+  "🧪 TEST"
+  "🏷️  TYPES"
+  "✏️  TYPO"
+  "🦺 VALIDATION"
+  "🚧 WIP"
+  )
 
-echo
-declare item=$(menu "$@" "${GITMOJI[@]}")
-echo "selected ${item##* }"
+  echo
+  declare item=$(menu "$@" "${GITMOJI[@]}")
+  echo "selected ${item##* }"
+fi
