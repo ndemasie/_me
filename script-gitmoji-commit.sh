@@ -13,7 +13,7 @@ declare GO_UP="\033[A\033[80D"
 # CONSTS
 declare TICKET_NUMBER_LEN=3
 declare TOP_WORDS_EXCLUDED=("")
-declare GIT_MAIN_BRANCH="master"
+declare GIT_MAIN_BRANCH="main"
 declare GIT_EXCLUDE_REGEX=".env\.*"
 declare GITMOJI_OPTIONS=(
   "🐛 BUGFIX"
@@ -135,13 +135,12 @@ main() {
   if [[ ! "${GIT_BRANCH}" == "${GIT_MAIN_BRANCH}" ]]; then
     log --warn "Not on ${C_GREEN}${GIT_MAIN_BRANCH}${C_RESET} branch"
 
-    declare yn_continue=$(ask_yn "Do you want to continue on ${C_GREEN}${GIT_BRANCH}${C_RESET}?")
-    echo
-    if [[ "$yn_continue" == "y" ]]; then
+    if ask_yn "Do you want to continue on ${C_GREEN}${GIT_BRANCH}${C_RESET}? "; then
       branch_name="${GIT_BRANCH}"
       ticket_type=$(echo "${GIT_BRANCH%/*}" | tr '[:lower:]' '[:upper:]')
       ticket_number=$(echo "${GIT_BRANCH}" | grep -E --only-matching --regexp "$TICKET_NUMBER_REGEXP")
     fi
+    echo
   fi
 
   # Read ticket type
@@ -192,9 +191,8 @@ main() {
   printf "%s %s\n" "Commit Message:" "${commit_message}"
 
   # Confirm
-  declare yn_continue=$(ask_yn "Everything look good?")
+  ask_yn "Everything look good? " || exit 0
   echo
-  [[ "${yn_continue}" == "n" ]] && exit 0
 
   log --debug "Skipping git commands while in debug mode" && return 0
 
@@ -226,9 +224,8 @@ main() {
   git commit --message "${commit_message}"
 
   # Rebase
-  declare yn_rebase=$(ask_yn "Rebase ${C_GREEN}origin/${GIT_MAIN_BRANCH}?")
-  echo
-  if [[ "${yn_rebase}" == "y" ]]; then
+  if ask_yn "Rebase ${C_GREEN}origin/${GIT_MAIN_BRANCH}? "; then
+    echo
     log --info "Rebasing ${C_GREEN}${GIT_MAIN_BRANCH} => ${branch_name}${C_RESET}"
     git rebase origin/${GIT_MAIN_BRANCH} || {
       log --warn "Rebase failed. You will need to resolve the merge conflicts"
@@ -236,6 +233,8 @@ main() {
       git rebase --abort
       exit 1
     }
+  else
+    echo
   fi
 
   # Publish

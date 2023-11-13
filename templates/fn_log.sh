@@ -1,17 +1,18 @@
 #!/usr/bin/env bash
 
 log() {
-  local DEBUG=true
-  local VERBOSE=true
+  local DEBUG="${DEBUG:-true}"
+  local VERBOSE="${VERBOSE:-true}"
 
   local C_RESET="\e[0m"
-  local C_WHITE="\e[97m"
+  local C_BLACK="\e[30m"
   local C_YELLOW="\e[33m"
+  local C_WHITE="\e[97m"
   local C_BLACK_BG="\e[40m"
-  local C_GREEN_BG="\e[42m"
-  local C_CYAN_LIGHT_BG="\e[106m"
-  local C_YELLOW_LIGHT_BG="\e[103m"
   local C_RED_BG="\e[41m"
+  local C_GREEN_BG="\e[42m"
+  local C_YELLOW_LIGHT_BG="\e[103m"
+  local C_CYAN_LIGHT_BG="\e[106m"
 
   local flag=${1:-}
   [[ $flag = -* ]] && shift

@@ -16,17 +16,15 @@ ask_yn() {
     read -r -n 1
 
     case "${REPLY}" in
-      y|Y) break ;;
-      n|N) break ;;
+      y|Y) true; return;;
+      n|N) false; return;;
       *) print_error=$REPLY; printf "${GOTO_TOP}${CLEAR_LINE}" echo >&2;;
     esac
   done
-
-  echo "${REPLY}" | tr '[:upper:]' '[:lower:]' | cat
 }
 
 # DEMO
 # If script called directly
 if [[ "${BASH_SOURCE[0]}" == "${0}" ]]; then
-  ask_yn "Do you want to continue ?"
+  ask_yn "Do you want to continue ? "
 fi
