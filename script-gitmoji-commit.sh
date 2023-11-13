@@ -4,6 +4,11 @@
 set -o nounset   # abort on unbound variable
 set -o pipefail  # don't hide errors within pipes
 
+# Imports
+source "$(dirname "$0")/templates/fn_log.sh"
+source "$(dirname "$0")/templates/fn_menu.sh"
+source "$(dirname "$0")/templates/fn_menu.sh"
+
 # COLORS
 declare C_RESET='\033[0m'
 declare C_GREEN="\033[32m"
@@ -70,11 +75,6 @@ declare VERBOSE=false
 usage() {
   echo "usage: gf [-d | --debug ] [-v | --verbose ] [-h | --help]"
 }
-
-# Helper functions
-source "./templates/fn_log.sh"
-source "./templates/fn_ask_yn.sh"
-source "./templates/fn_menu.sh"
 
 # Script layout
 _cleanup() {
