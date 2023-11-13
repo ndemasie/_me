@@ -6,6 +6,7 @@ if ! command -v brew; then
 fi
 
 # # Setup
+# brew list gum &>/dev/null || brew install gum
 # brew list ffmpeg &>/dev/null || brew install ffmpeg
 # brew list tmux &>/dev/null || brew install tmux
 # brew list python3 &>/dev/null || brew install python3
