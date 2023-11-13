@@ -7,7 +7,7 @@ set -o pipefail  # don't hide errors within pipes
 # Imports
 source "$(dirname "$0")/templates/fn_log.sh"
 source "$(dirname "$0")/templates/fn_menu.sh"
-source "$(dirname "$0")/templates/fn_menu.sh"
+source "$(dirname "$0")/templates/fn_ask_yn.sh"
 
 # COLORS
 declare C_RESET='\033[0m'
