@@ -23,3 +23,4 @@ fi
 # brew list warp &>/dev/null || brew install --cask warp
 # brew list rectangle &>/dev/null || brew install --cask rectangle
 # brew list maccy &>/dev/null || brew install --cask maccy
+# brew list MonitorControl &>/dev/null || brew install --cask MonitorControl
