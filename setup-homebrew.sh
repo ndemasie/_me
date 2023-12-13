@@ -24,3 +24,4 @@ fi
 # brew list rectangle &>/dev/null || brew install --cask rectangle
 # brew list maccy &>/dev/null || brew install --cask maccy
 # brew list MonitorControl &>/dev/null || brew install --cask MonitorControl
+# brew list menubarx &>/dev/null || brew install --cask menubarx
