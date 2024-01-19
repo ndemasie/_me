@@ -9,15 +9,20 @@
         "editor.defaultFormatter": "vscode.html-language-features"
     },
     "[html]": {
-        "editor.defaultFormatter": "vscode.html-language-features"
+        "editor.defaultFormatter": "vscode.html-language-features",
+        "html.autoClosingTags": true
     },
     "[javascript]": {
         "editor.defaultFormatter": "esbenp.prettier-vscode",
-        "javascript.autoClosingTags": true
+        "javascript.autoClosingTags": true,
+        "javascript.suggest.autoImports": true,
+        "javascript.updateImportsOnFileMove.enabled": "always"
     },
     "[javascriptreact]": {
         "editor.defaultFormatter": "esbenp.prettier-vscode",
-        "javascript.autoClosingTags": true
+        "javascript.autoClosingTags": true,
+        "javascript.suggest.autoImports": true,
+        "javascript.updateImportsOnFileMove.enabled": "always"
     },
     "[json]": {
         "editor.defaultFormatter": "vscode.json-language-features"
@@ -25,16 +30,30 @@
     "[jsonc]": {
         "editor.defaultFormatter": "vscode.json-language-features"
     },
+    "[nginx]": {
+        "editor.defaultFormatter": "ahmadalli.vscode-nginx-conf"
+    },
     "[scss]": {
         "editor.defaultFormatter": "vscode.css-language-features"
     },
+    "[svelte]": {
+        "svelte.enable-ts-plugin": true,
+    },
+    "[svg]": {
+        "svg.preview.mode": "svg"
+    },
+    "[terraform]": {},
     "[typescript]": {
         "editor.defaultFormatter": "esbenp.prettier-vscode",
-        "typescript.autoClosingTags": true
+        "typescript.autoClosingTags": true,
+        "typescript.suggest.autoImports": true,
+        "typescript.updateImportsOnFileMove.enabled": "always"
     },
     "[typescriptreact]": {
         "editor.defaultFormatter": "esbenp.prettier-vscode",
-        "typescript.autoClosingTags": true
+        "typescript.autoClosingTags": true,
+        "typescript.suggest.autoImports": true,
+        "typescript.updateImportsOnFileMove.enabled": "always"
     },
     "breadcrumbs.enabled": true,
     "cSpell.enableFiletypes": [
@@ -62,17 +81,30 @@
         "ndemasie"
     ],
     "diffEditor.ignoreTrimWhitespace": false,
+    "diffEditor.maxComputationTime": 0,
     "editor.accessibilitySupport": "off",
     "editor.bracketPairColorization.enabled": true,
+    "editor.codeActionsOnSave": {
+        "source.fixAll.eslint": true
+    },
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "editor.formatOnSave": true,
+    "editor.guides.highlightActiveIndentation": true,
     "editor.linkedEditing": true,
     "editor.minimap.enabled": false,
     "editor.tabSize": 2,
+    "editor.unicodeHighlight.ambiguousCharacters": false,
+    "eslint.validate": [
+        "javascript",
+        "typescript"
+    ],
     "explorer.confirmDragAndDrop": true,
     "extensions.ignoreRecommendations": true,
     "files.defaultLanguage": "${activeEditorLanguage}",
     "files.trimTrailingWhitespace": true,
     "git.autofetch": true,
     "git.confirmSync": false,
+    "git.ignoreRebaseWarning": true,
     "githubPullRequests.commentExpandState": "collapseAll",
     "githubPullRequests.createOnPublishBranch": "never",
     "githubPullRequests.fileListLayout": "tree",
@@ -83,25 +115,17 @@
     "gitlens.hovers.currentLine.over": "line",
     "gitlens.menus": false,
     "gitlens.views.branches.files.layout": "tree",
-    "html.autoClosingTags": true,
-    "javascript.suggest.autoImports": true,
+    "liveServer.settings.donotShowInfoMsg": true,
     "Lua.telemetry.enable": false,
     "redhat.telemetry.enabled": false,
     "scssFormatter.singleQuote": true,
     "security.workspace.trust.untrustedFiles": "open",
-    "svelte.enable-ts-plugin": true,
-    "svg.preview.mode": "svg",
-    "terminal.integrated.tabs.hideCondition": "singleGroup",
-    "typescript.suggest.autoImports": true,
-    "typescript.updateImportsOnFileMove.enabled": "always",
-    "vetur.format.defaultFormatter.ts": "vscode-typescript",
-    "window.confirmBeforeClose": "always",
+    "team.showWelcomeMessage": false,
     "terminal.integrated.tabs.enabled": false,
-    "window.zoomLevel": 2,
+    "terminal.integrated.tabs.hideCondition": "singleGroup",
     "update.showReleaseNotes": false,
-    "[terraform]": {},
-    "liveServer.settings.donotShowInfoMsg": true,
-    "[nginx]": {
-        "editor.defaultFormatter": "ahmadalli.vscode-nginx-conf"
-    }
+    "vetur.format.defaultFormatter.ts": "vscode-typescript",
+    "window.confirmBeforeClose": "keyboardOnly",
+    "window.zoomLevel": 2,
+    "workbench.startupEditor": "none"
 }
