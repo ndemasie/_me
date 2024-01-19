@@ -76,64 +76,50 @@
     "command": "workbench.action.increaseViewWidth"
   },
   {
-    "key": "alt+cmd+backspace",
-    "command": "workbench.action.terminal.kill",
-    "when": "terminalFocus"
+    "key": "ctrl+cmd+s",
+    "command": "cSpell.suggestSpellingCorrections"
   },
   {
-    "key": "ctrl+alt+=",
+    "key": "ctrl+cmd+backspace",
+    "command": "workbench.action.terminal.kill",
+    "when": "terminalFocus && terminalHasBeenCreated"
+  },
+  {
+    "key": "ctrl+cmd+\\",
     "command": "workbench.action.toggleMaximizedPanel"
   },
   {
-    "key": "cmd+h",
-    "command": "workbench.action.toggleAuxiliaryBar"
+    "key": "alt+cmd+\\",
+    "command": "workbench.action.movePanelToSecondarySideBar"
   },
   {
-    "key": "cmd+;",
-    "command": "workbench.action.moveSidePanelToPanel"
+    "key": "alt+cmd+]",
+    "command": "workbench.action.moveSecondarySideBarToPanel"
   },
   {
-    "key": "cmd+'",
-    "command": "workbench.action.movePanelToSidePanel"
+    "key": "alt+f4",
+    "command": "git.unstage"
   },
   {
-    "key": "ctrl+shift+pagedown",
-    "command": "moveActiveEditor"
+    "key": "alt+f6",
+    "command": "git.stage"
   },
   {
-    "key": "ctrl+shift+pageup",
-    "command": "moveActiveEditor"
+    "key": "ctrl+n",
+    "command": "explorer.newFile",
+    "when": "!editorFocus"
   },
   {
-    "key": "f10",
-    "command": "editor.action.revealDefinition",
-    "when": "editorHasDefinitionProvider && editorTextFocus && !isInEmbeddedEditor"
+    "key": "ctrl+shift+n",
+    "command": "explorer.newFolder",
+    "when": "!editorFocus"
   },
   {
-    "key": "f12",
-    "command": "-editor.action.revealDefinition",
-    "when": "editorHasDefinitionProvider && editorTextFocus && !isInEmbeddedEditor"
-  },
-  {
-    "key": "cmd+w cmd+w",
-    "command": "workbench.action.closeWindow",
-    "when": "!editorIsOpen && !multipleEditorGroups"
-  },
-  {
-    "key": "cmd+w",
-    "command": "-workbench.action.closeWindow",
-    "when": "!editorIsOpen && !multipleEditorGroups"
-  },
-  {
-    "key": "alt+cmd+n",
-    "command": "explorer.newFile"
-  },
-  {
-    "key": "ctrl+shift+alt+C",
+    "key": "ctrl+shift+b",
     "command": "editor.action.insertSnippet",
     "args": {
       "snippet": "// #region $0\n$TM_SELECTED_TEXT\n// #endregion"
     },
-    "when": "editorHasSelection && editorTextFocus && !editorReadonly"
+    "when": "editorHasSelection && editorTextFocus && !editorReadonly",
   }
 ]
