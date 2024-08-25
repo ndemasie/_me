@@ -5,13 +5,15 @@ if ! command -v brew; then
   /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 fi
 
-# # Setup
+# # SETUP
+
 # brew list gum &>/dev/null || brew install gum
 # brew list ffmpeg &>/dev/null || brew install ffmpeg
 # brew list tmux &>/dev/null || brew install tmux
 # brew list python3 &>/dev/null || brew install python3
 
-# # Language specifics
+# # TOOLS
+
 # brew list git &>/dev/null || brew install git
 # brew list jq &>/dev/null || brew install jq
 # brew list deno &>/dev/null || brew install deno
@@ -19,9 +21,28 @@ fi
 # brew list typescript &>/dev/null || brew install typescript
 # brew list terraform &>/dev/null || brew install terraform
 
-# # App
+# # APPS
+
 # brew list warp &>/dev/null || brew install --cask warp
+
+# Rectangle - https://rectangleapp.com/pro
+# Superior window management on macOS
 # brew list rectangle &>/dev/null || brew install --cask rectangle
+
+# Maccy - https://maccy.app
+# Clipboard manager for macOS which does one job - keep your copy history at hand.
 # brew list maccy &>/dev/null || brew install --cask maccy
+
+# MonitorControl - https://github.com/MonitorControl/MonitorControl
+# Controls your external display brightness and volume and shows native OSD.
 # brew list MonitorControl &>/dev/null || brew install --cask MonitorControl
+
+# MenubarX - https://menubarx.app
+# A powerful menu bar browser
 # brew list menubarx &>/dev/null || brew install --cask menubarx
+
+# # EXTENSIONS
+
+# Vimari - https://github.com/televator-apps/vimari - https://github.com/vladdoster/homebrew-formulae
+# Vimari is a Safari extension that provides vim style keyboard based navigation.
+# brew list vimari &>/dev/null || brew install --cask vladdoster/formulae/vimari
