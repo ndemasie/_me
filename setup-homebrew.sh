@@ -41,6 +41,10 @@ fi
 # A powerful menu bar browser
 # brew list menubarx &>/dev/null || brew install --cask menubarx
 
+# Raspberry Pi Imager - https://www.raspberrypi.com/software/
+# Imager for PI hobbiests
+# brew list raspberry-pi-imager &>/dev/null || brew install --cask raspberry-pi-imager
+
 # # EXTENSIONS
 
 # Vimari - https://github.com/televator-apps/vimari - https://github.com/vladdoster/homebrew-formulae
