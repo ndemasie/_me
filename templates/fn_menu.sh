@@ -101,8 +101,8 @@ menu() {
   done
   declare options_filtered=()
 
-  get_paged_index() { echo "$(max -n $(($page * $PAGE_SIZE + $selected)) 0)"; }
-  get_selected_option() { echo "${options_filtered[$(get_paged_index)]:-}"; }
+  get_selected_page_index() { echo "$(max -n 0 $(($page * $PAGE_SIZE + $selected)))"; }
+  get_selected_option() { echo "${options_filtered[$(get_selected_page_index)]:-}"; }
   get_cur_options_len() { echo "$(min -n "${#options_filtered[@]}" $LIST_LEN "$((${#options_filtered[@]} - ($PAGE_SIZE * $page)))")"; }
   go_to() { printf "\033[$((${CURSOR_POS%;*}+${1:-0}));${2:-0}H" >&2; }
   go_to_search() { go_to 0 "$((9+${#search}))"; }
@@ -120,7 +120,7 @@ menu() {
     done
 
     declare cur_list_len=$(get_cur_options_len)
-    selected=$((($selected + $cur_list_len) % $cur_list_len))
+    selected=$((($selected + $cur_list_len) % $(max -n 1 $cur_list_len)))
 
     go_to
     if [[ $FLAG_SEARCH == true ]]; then
@@ -131,7 +131,7 @@ menu() {
     for (( i=0; i<$LIST_LEN; i++ )) {
       declare page_i=$(($page * $PAGE_SIZE + $i))
       declare option="${options_filtered[$page_i]:-}"
-      if [[ $page_i == $(get_paged_index) ]]; then
+      if [[ $page_i == $(get_selected_page_index) ]]; then
         print_option_selected "$option"
       else
         print_option "$option"
