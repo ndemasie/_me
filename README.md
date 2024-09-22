@@ -1,1 +1,1 @@
-Personal repo to hold my scripts, aliases, .dotfiles, functions, or anything else I find useful.
+Personal repo to hold scripts, aliases, .dotfiles, functions, or anything else I find useful.

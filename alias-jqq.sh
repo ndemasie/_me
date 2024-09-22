@@ -1,1 +1,1 @@
-alias jqq="/Users/nathandemasie/code/jqq"
+alias jqq="/Users/${USER}/code/jqq"
