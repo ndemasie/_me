@@ -13,6 +13,6 @@ done
 BUN_INSTALL="$HOME/.bun"
 export PATH="$BUN_INSTALL/bin:$PATH"
 
-# Add Python to path
+# Add Python3 to path
 PYTHON_INSTALL=$(python3 -m site --user-base)
 export PATH="$PYTHON_INSTALL/bin:$PATH"
