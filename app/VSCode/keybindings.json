@@ -1,79 +1,22 @@
+// Place your key bindings in this file to override the defaults
 [
   {
-    "key": "cmd+alt+shift+left",
-    "command": "moveActiveEditor",
-    "args": {
-      "to": "left",
-      "by": "tab",
-      "value": 1
-    }
+    "key": "ctrl+n",
+    "command": "explorer.newFile",
+    "when": "!editorFocus"
   },
   {
-    "key": "cmd+alt+shift+right",
-    "command": "moveActiveEditor",
-    "args": {
-      "to": "right",
-      "by": "tab",
-      "value": 1
-    }
-  },
-  {
-    "key": "alt+m down",
-    "command": "merge-conflict.next",
-    "when": "editorTextFocus"
-  },
-  {
-    "key": "alt+m up",
-    "command": "merge-conflict.previous",
-    "when": "editorTextFocus"
-  },
-  {
-    "key": "alt+m enter",
-    "command": "merge-conflict.accept.selection",
-    "when": "editorTextFocus"
-  },
-  {
-    "key": "alt+m 1",
-    "command": "merge-conflict.accept.current",
-    "when": "editorTextFocus"
-  },
-  {
-    "key": "alt+m 2",
-    "command": "merge-conflict.accept.incoming",
-    "when": "editorTextFocus"
-  },
-  {
-    "key": "alt+m 3",
-    "command": "merge-conflict.accept.both",
-    "when": "editorTextFocus"
-  },
-  {
-    "key": "pageup",
-    "command": "cursorMove",
-    "args": {
-      "to": "up",
-      "by": "line",
-      "value": 10
-    },
-    "when": "editorTextFocus"
-  },
-  {
-    "key": "pagedown",
-    "command": "cursorMove",
-    "args": {
-      "to": "down",
-      "by": "line",
-      "value": 10
-    },
-    "when": "editorTextFocus"
-  },
-  {
-    "key": "shift+alt+-",
-    "command": "workbench.action.decreaseViewWidth"
+    "key": "ctrl+shift+n",
+    "command": "explorer.newFolder",
+    "when": "!editorFocus"
   },
   {
     "key": "shift+alt+=",
-    "command": "workbench.action.increaseViewWidth"
+    "command": "workbench.action.increaseViewSize"
+  },
+  {
+    "key": "shift+alt+-",
+    "command": "workbench.action.decreaseViewSize"
   },
   {
     "key": "ctrl+cmd+s",
@@ -89,14 +32,6 @@
     "command": "workbench.action.toggleMaximizedPanel"
   },
   {
-    "key": "alt+cmd+\\",
-    "command": "workbench.action.movePanelToSecondarySideBar"
-  },
-  {
-    "key": "alt+cmd+]",
-    "command": "workbench.action.moveSecondarySideBarToPanel"
-  },
-  {
     "key": "alt+f4",
     "command": "git.unstage"
   },
@@ -105,21 +40,55 @@
     "command": "git.stage"
   },
   {
-    "key": "ctrl+n",
-    "command": "explorer.newFile",
-    "when": "!editorFocus"
+    "key": "f10",
+    "command": "cursorMove",
+    "args": {
+      "to": "down",
+      "by": "wrappedLine",
+      "value": 8,
+      "select": false
+    },
+    "when": "editorTextFocus && !editorReadonly"
   },
   {
-    "key": "ctrl+shift+n",
-    "command": "explorer.newFolder",
-    "when": "!editorFocus"
+    "key": "f11",
+    "command": "cursorMove",
+    "args": {
+      "to": "up",
+      "by": "wrappedLine",
+      "value": 8,
+      "select": false
+    },
+    "when": "editorTextFocus && !editorReadonly"
   },
   {
     "key": "ctrl+shift+b",
     "command": "editor.action.insertSnippet",
+    "when": "editorHasSelection && editorTextFocus && !editorReadonly",
     "args": {
       "snippet": "// #region $0\n$TM_SELECTED_TEXT\n// #endregion"
-    },
-    "when": "editorHasSelection && editorTextFocus && !editorReadonly",
+    }
+  },
+  // {
+  //   "key": "alt+cmd+\\",
+  //   "command": "workbench.action.movePanelToSecondarySideBar"
+  // },
+  // {
+  //   "key": "alt+cmd+]",
+  //   "command": "workbench.action.moveSecondarySideBarToPanel",
+  //   "when": "!editorTextFocus && !foldingEnabled"
+  // },
+  {
+    "key": "cmd+k e",
+    "command": "workbench.files.action.focusOpenEditorsView",
+    "when": "workbench.explorer.outline.open"
+  },
+  {
+    "key": "shift+cmd+e",
+    "command": "workbench.files.action.focusFilesExplorer"
+  },
+  {
+    "key": "shift+cmd+u",
+    "command": "cursorRedo"
   }
 ]

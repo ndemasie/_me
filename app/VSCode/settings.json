@@ -1,131 +1,135 @@
 {
-    "[astro]": {
-        "editor.defaultFormatter": "astro-build.astro-vscode"
-    },
-    "[css]": {
-        "editor.defaultFormatter": "vscode.css-language-features"
-    },
-    "[handlebars]": {
-        "editor.defaultFormatter": "vscode.html-language-features"
-    },
-    "[html]": {
-        "editor.defaultFormatter": "vscode.html-language-features",
-        "html.autoClosingTags": true
-    },
-    "[javascript]": {
-        "editor.defaultFormatter": "esbenp.prettier-vscode",
-        "javascript.autoClosingTags": true,
-        "javascript.suggest.autoImports": true,
-        "javascript.updateImportsOnFileMove.enabled": "always"
-    },
-    "[javascriptreact]": {
-        "editor.defaultFormatter": "esbenp.prettier-vscode",
-        "javascript.autoClosingTags": true,
-        "javascript.suggest.autoImports": true,
-        "javascript.updateImportsOnFileMove.enabled": "always"
-    },
-    "[json]": {
-        "editor.defaultFormatter": "vscode.json-language-features"
-    },
-    "[jsonc]": {
-        "editor.defaultFormatter": "vscode.json-language-features"
-    },
-    "[nginx]": {
-        "editor.defaultFormatter": "ahmadalli.vscode-nginx-conf"
-    },
-    "[scss]": {
-        "editor.defaultFormatter": "vscode.css-language-features"
-    },
-    "[svelte]": {
-        "svelte.enable-ts-plugin": true,
-    },
-    "[svg]": {
-        "svg.preview.mode": "svg"
-    },
-    "[terraform]": {},
-    "[typescript]": {
-        "editor.defaultFormatter": "esbenp.prettier-vscode",
-        "typescript.autoClosingTags": true,
-        "typescript.suggest.autoImports": true,
-        "typescript.updateImportsOnFileMove.enabled": "always"
-    },
-    "[typescriptreact]": {
-        "editor.defaultFormatter": "esbenp.prettier-vscode",
-        "typescript.autoClosingTags": true,
-        "typescript.suggest.autoImports": true,
-        "typescript.updateImportsOnFileMove.enabled": "always"
-    },
-    "breadcrumbs.enabled": true,
-    "cSpell.enableFiletypes": [
-        "!c",
-        "!cpp",
-        "!csharp",
-        "!graphql",
-        "!haskell",
-        "!jade",
-        "!java",
-        "!jsonc",
-        "!latex",
-        "!php",
-        "!pug",
-        "!rust",
-        "!scala",
-        "sql",
-        "vue",
-        "vue-html",
-        "vue-postcss"
-    ],
-    "cSpell.userWords": [
-        "Liebling",
-        "Masie",
-        "ndemasie"
-    ],
-    "diffEditor.ignoreTrimWhitespace": false,
-    "diffEditor.maxComputationTime": 0,
-    "editor.accessibilitySupport": "off",
-    "editor.bracketPairColorization.enabled": true,
-    "editor.codeActionsOnSave": {
-        "source.fixAll.eslint": true
-    },
+  "Lua.telemetry.enable": false,
+  "[astro]": {
+    "editor.defaultFormatter": "astro-build.astro-vscode"
+  },
+  "[css]": {
+    "editor.defaultFormatter": "vscode.css-language-features"
+  },
+  "[dotenv]": {
+    "editor.defaultFormatter": "foxundermoon.shell-format"
+  },
+  "[handlebars]": {
+    "editor.defaultFormatter": "vscode.html-language-features"
+  },
+  "[html]": {
+    "editor.defaultFormatter": "vscode.html-language-features",
+    "html.autoClosingTags": true
+  },
+  "[ignore]": {
+    "editor.defaultFormatter": "foxundermoon.shell-format"
+  },
+  "[javascript]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode",
-    "editor.formatOnSave": true,
-    "editor.guides.highlightActiveIndentation": true,
-    "editor.linkedEditing": true,
-    "editor.minimap.enabled": false,
-    "editor.tabSize": 2,
-    "editor.unicodeHighlight.ambiguousCharacters": false,
-    "eslint.validate": [
-        "javascript",
-        "typescript"
-    ],
-    "explorer.confirmDragAndDrop": true,
-    "extensions.ignoreRecommendations": true,
-    "files.defaultLanguage": "${activeEditorLanguage}",
-    "files.trimTrailingWhitespace": true,
-    "git.autofetch": true,
-    "git.confirmSync": false,
-    "git.ignoreRebaseWarning": true,
-    "githubPullRequests.commentExpandState": "collapseAll",
-    "githubPullRequests.createOnPublishBranch": "never",
-    "githubPullRequests.fileListLayout": "tree",
-    "githubPullRequests.pullBranch": "never",
-    "gitlens.codeLens.scopes": [],
-    "gitlens.defaultDateFormat": null,
-    "gitlens.defaultTimeFormat": null,
-    "gitlens.hovers.currentLine.over": "line",
-    "gitlens.menus": false,
-    "gitlens.views.branches.files.layout": "tree",
-    "liveServer.settings.donotShowInfoMsg": true,
-    "Lua.telemetry.enable": false,
-    "redhat.telemetry.enabled": false,
-    "scssFormatter.singleQuote": true,
-    "security.workspace.trust.untrustedFiles": "open",
-    "team.showWelcomeMessage": false,
-    "terminal.integrated.tabs.enabled": false,
-    "terminal.integrated.tabs.hideCondition": "singleGroup",
-    "update.showReleaseNotes": false,
-    "vetur.format.defaultFormatter.ts": "vscode-typescript",
-    "window.confirmBeforeClose": "keyboardOnly",
-    "window.zoomLevel": 2,
-    "workbench.startupEditor": "none"
+    "javascript.autoClosingTags": true,
+    "javascript.suggest.autoImports": true,
+    "javascript.updateImportsOnFileMove.enabled": "always"
+  },
+  "[javascriptreact]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "javascript.autoClosingTags": true,
+    "javascript.suggest.autoImports": true,
+    "javascript.updateImportsOnFileMove.enabled": "always"
+  },
+  "[json]": {
+    "editor.defaultFormatter": "vscode.json-language-features"
+  },
+  "[jsonc]": {
+    "editor.defaultFormatter": "vscode.json-language-features"
+  },
+  "[nginx]": {
+    "editor.defaultFormatter": "ahmadalli.vscode-nginx-conf",
+    "scssFormatter.singleQuote": true
+  },
+  "[scss]": {
+    "editor.defaultFormatter": "vscode.css-language-features"
+  },
+  "[shellscript]": {
+    "editor.defaultFormatter": "foxundermoon.shell-format"
+  },
+  "[svelte]": {
+    "svelte.enable-ts-plugin": true
+  },
+  "[svg]": {
+    "svg.preview.mode": "svg"
+  },
+  "[terraform]": {},
+  "[typescript]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "typescript.autoClosingTags": true,
+    "typescript.suggest.autoImports": true,
+    "typescript.updateImportsOnFileMove.enabled": "always"
+  },
+  "[typescriptreact]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "typescript.autoClosingTags": true,
+    "typescript.suggest.autoImports": true,
+    "typescript.updateImportsOnFileMove.enabled": "always"
+  },
+  "cSpell.enableFiletypes": [
+    "!c",
+    "!cpp",
+    "!csharp",
+    "!graphql",
+    "!haskell",
+    "!jade",
+    "!java",
+    "!jsonc",
+    "!latex",
+    "!php",
+    "!pug",
+    "!rust",
+    "!scala",
+    "sql",
+    "vue",
+    "vue-html",
+    "vue-postcss"
+  ],
+  "cSpell.userWords": ["Liebling", "Masie", "ndemasie"],
+  "diffEditor.ignoreTrimWhitespace": false,
+  "diffEditor.maxComputationTime": 0,
+  "editor.accessibilitySupport": "off",
+  "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": "explicit"
+  },
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "editor.formatOnSave": true,
+  "editor.guides.highlightActiveIndentation": true,
+  "editor.linkedEditing": true,
+  "editor.minimap.enabled": false,
+  "editor.tabSize": 2,
+  "editor.unicodeHighlight.ambiguousCharacters": false,
+  "eslint.validate": ["javascript", "typescript"],
+  "explorer.confirmDragAndDrop": true,
+  "extensions.ignoreRecommendations": true,
+  "files.defaultLanguage": "${activeEditorLanguage}",
+  "files.trimTrailingWhitespace": true,
+  "git.autofetch": true,
+  "git.confirmSync": false,
+  "git.ignoreRebaseWarning": true,
+  "githubPullRequests.commentExpandState": "collapseAll",
+  "githubPullRequests.createOnPublishBranch": "never",
+  "githubPullRequests.fileListLayout": "tree",
+  "githubPullRequests.pullBranch": "never",
+  "gitlens.codeLens.scopes": [],
+  "gitlens.defaultDateFormat": null,
+  "gitlens.defaultTimeFormat": null,
+  "gitlens.hovers.currentLine.over": "line",
+  "gitlens.menus": false,
+  "gitlens.views.branches.files.layout": "tree",
+  "liveServer.settings.donotShowInfoMsg": true,
+  "redhat.telemetry.enabled": false,
+  "search.exclude": {
+    "**/*.code-search": true,
+    "**/bower_components": true,
+    "**/node_modules": true,
+    "**/package-lock.json": true
+  },
+  "security.workspace.trust.untrustedFiles": "open",
+  "team.showWelcomeMessage": false,
+  "terminal.integrated.tabs.enabled": false,
+  "update.showReleaseNotes": false,
+  "window.confirmBeforeClose": "keyboardOnly",
+  "window.zoomLevel": 2,
+  "workbench.startupEditor": "none"
 }

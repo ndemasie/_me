@@ -1,14 +1,49 @@
 {
-	// Place your snippets for typescriptreact here. Each snippet is defined under a snippet name and has a prefix, body and 
-	// description. The prefix is what is used to trigger the snippet and the body will be expanded and inserted. Possible variables are:
-	// $1, $2 for tab stops, $0 for the final cursor position, and ${1:label}, ${2:another} for placeholders. Placeholders with the 
-	// same ids are connected.
-	// Example:
-	"Console Log": {
-		"prefix": "cl",
-		"body": [
-			"console.log('$1', $1)"
-		],
-		"description": "Console log"
-	}
+  "Console Log": {
+    "prefix": "cl",
+    "body": ["console.log('$1', $1)"],
+    "description": "Console log"
+  },
+  "Console log deep": {
+    "prefix": "cld",
+    "body": ["console.log(_.cloneDeep($1))"],
+    "description": "Console log with _.cloneDeep()"
+  },
+  "useState": {
+    "prefix": "us",
+    "body": ["const [${1}, set${1/(.*)/${1:/capitalize}/}] = useState($2)$0"],
+    "description": "React useState() hook"
+  },
+  "useEffect": {
+    "prefix": "ue",
+    "body": ["useEffect(() => {$1}, [])$0"],
+    "description": "React useEffect() hook"
+  },
+  "useContext": {
+    "prefix": "ux",
+    "body": ["const ${1:ctx} = useContext($2)$0"],
+    "description": "React useContext() hook"
+  },
+  "useCallback": {
+    "prefix": "uc",
+    "body": ["const ${1:memoizedCallback} = useCallback(() => {$2}, [])$0"],
+    "description": "React useCallback() hook"
+  },
+  "useMemo": {
+    "prefix": "um",
+    "body": ["const ${1:memoizedValue} = useMemo(() => {$2}, [])$0"],
+    "description": "React useMemo() hook"
+  },
+  "useRef": {
+    "prefix": "uref",
+    "body": ["const ${1:ref} = useRef()$0"],
+    "description": "React useRef() hook"
+  },
+  "useReducer": {
+    "prefix": "ur",
+    "body": [
+      "const [${1:prev}, set${1/(.*)/${1:/capitalize}/}] = useReducer((${3:prev}, ${4:payload}) => { $5 }))$0"
+    ],
+    "description": "React useReducer() hook"
+  }
 }
