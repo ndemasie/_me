@@ -1,5 +1,7 @@
 .DS_Store
 .ignore
+
+# Ignore private files
 .private
 
 # Ignore secrets
