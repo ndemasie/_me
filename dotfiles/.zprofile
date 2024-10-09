@@ -6,13 +6,9 @@ source "$HOME/_me/fn-git.sh"
 
 # Load all secrets
 for secret in $HOME/_me/secrets/.secrets*(.); do
-  source $secret;
+  source $secret
 done
 
-# Add Bun to path
-BUN_INSTALL="$HOME/.bun"
-export PATH="$BUN_INSTALL/bin:$PATH"
-
-# Add Python3 to path
-PYTHON_INSTALL=$(python3 -m site --user-base)
-export PATH="$PYTHON_INSTALL/bin:$PATH"
+# Update PATH
+PATH="$HOME/.bun/bin:$PATH"                     # Bun
+PATH="$(python3 -m site --user-base)/bin:$PATH" # Python3
