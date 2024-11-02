@@ -5,6 +5,8 @@ alias gr="confirm 'git rebase origin/main' && git rebase origin/main"
 
 # delete local branches where remote is :gone
 function gprune() {
+  # Fetch latest
   git fetch --prune --quiet
+  # Force delete 'gone' branchs
   git branch -vv | grep '^[^*].*: gone]' | awk '{print $1}' | xargs git branch -D
 }
