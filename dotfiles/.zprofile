@@ -1,3 +1,11 @@
+# Set PATH, MANPATH, etc., for Homebrew.
+eval "$(/opt/homebrew/bin/brew shellenv)"
+
+# Bash completion
+autoload -U +X compinit && compinit
+autoload -U +X bashcompinit && bashcompinit
+source /opt/homebrew/etc/profile.d/bash_completion.sh
+
 # Source fns
 source "$HOME/_me/templates/fn_confirm.sh"
 
