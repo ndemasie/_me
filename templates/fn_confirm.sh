@@ -10,11 +10,17 @@ function confirm() {
 
   while true; do
     printf "${YELLOW}%s${RESET}" "$prompt"
-    read  -r -n 1
+    read -r -n 1
     case "${REPLY}" in
-      y|Y) echo >&2; return 0 ;;
-      n|N) echo >&2; return 1 ;;
-      *) printf "      ${RED}%s${RESET}${GO_LEFT}" "Invalid input"
+    y | Y)
+      echo >&2
+      return 0
+      ;;
+    n | N)
+      echo >&2
+      return 1
+      ;;
+    *) printf "      ${RED}%s${RESET}${GO_LEFT}" "Invalid input" ;;
     esac
   done
 }

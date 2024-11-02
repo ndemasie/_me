@@ -14,26 +14,30 @@ menu() {
   # Set flags
   while true; do
     case "$1" in
-      -s|--search)
-        FLAG_SEARCH=true
-        ;;
-      -p|--page|--pagination)
-        FLAG_PAGINATION=true
-        if [[ "$2" =~ ^[0-9]{0,2}$ ]]; then
-          PAGE_SIZE=$2
-          shift
-        else
-          PAGE_SIZE=10
-        fi
-        ;;
-      *) break ;;
+    -s | --search)
+      FLAG_SEARCH=true
+      ;;
+    -p | --page | --pagination)
+      FLAG_PAGINATION=true
+      if [[ "$2" =~ ^[0-9]{0,2}$ ]]; then
+        PAGE_SIZE=$2
+        shift
+      else
+        PAGE_SIZE=10
+      fi
+      ;;
+    *) break ;;
     esac
     shift
   done
 
   cursor_on() { printf "${CURSOR_ON}" >&2; }
   cursor_off() { printf "${CURSOR_OFF}" >&2; }
-  get_cursor_position() { declare POS; read -sdR -p $'\033[6n' POS; echo $POS | cut -c3-; }
+  get_cursor_position() {
+    declare POS
+    read -sdR -p $'\033[6n' POS
+    echo $POS | cut -c3-
+  }
   min() { printf "%s\n" "${@:2}" | sort "$1" | head -n1; }
   max() { printf "%s\n" "${@:2}" | sort "$1" | tail -n1; }
   divide_round_down() { echo "$(awk "BEGIN {print int($1 / $2)}")"; }
@@ -57,13 +61,13 @@ menu() {
 
     declare key="${k1:-}${k2:-}${k3:-}${k4:-}${k5:-}"
     case "$key" in
-      $'\033[A') echo UP ;;
-      $'\033[B') echo DOWN ;;
-      $'\033[D') echo LEFT ;;
-      $'\033[C') echo RIGHT ;;
-      $'\177') echo BACKSPACE ;;
-      $'\0') echo ENTER;;
-      *) echo "$key" ;;
+    $'\033[A') echo UP ;;
+    $'\033[B') echo DOWN ;;
+    $'\033[D') echo LEFT ;;
+    $'\033[C') echo RIGHT ;;
+    $'\177') echo BACKSPACE ;;
+    $'\0') echo ENTER ;;
+    *) echo "$key" ;;
     esac
   }
 
@@ -104,8 +108,8 @@ menu() {
   get_selected_page_index() { echo "$(max -n 0 $(($page * $PAGE_SIZE + $selected)))"; }
   get_selected_option() { echo "${options_filtered[$(get_selected_page_index)]:-}"; }
   get_cur_options_len() { echo "$(min -n "${#options_filtered[@]}" $LIST_LEN "$((${#options_filtered[@]} - ($PAGE_SIZE * $page)))")"; }
-  go_to() { printf "\033[$((${CURSOR_POS%;*}+${1:-0}));${2:-0}H" >&2; }
-  go_to_search() { go_to 0 "$((9+${#search}))"; }
+  go_to() { printf "\033[$((${CURSOR_POS%;*} + ${1:-0}));${2:-0}H" >&2; }
+  go_to_search() { go_to 0 "$((9 + ${#search}))"; }
   print_option() { printf "${CLEAR_LINE}${C_RESET} %s\n" "$1" >&2; }
   print_option_selected() { printf "${C_SELECTED}  %s%s  ${C_RESET}\n" "$1" "${FILL_EMPTY:${#1}}" >&2; }
 
@@ -128,7 +132,7 @@ menu() {
       printf "${CLEAR_LINE}${C_RESET}\n" >&2
     fi
 
-    for (( i=0; i<$LIST_LEN; i++ )) {
+    for ((i = 0; i < $LIST_LEN; i++)); do
       declare page_i=$(($page * $PAGE_SIZE + $i))
       declare option="${options_filtered[$page_i]:-}"
       if [[ $page_i == $(get_selected_page_index) ]]; then
@@ -136,7 +140,7 @@ menu() {
       else
         print_option "$option"
       fi
-    }
+    done
 
     if [[ $FLAG_PAGINATION == true ]]; then
       printf "${CLEAR_LINE}${C_RESET}\n" >&2
@@ -158,66 +162,66 @@ menu() {
     # NOTE: `read_keyboard` out must be assigned. Inline use has escaping issue.
     declare key=$(read_keyboard)
     case "$key" in
-      ENTER)
-        declare option="$(get_selected_option)"
-        if [[ "$opt" != "" ]]; then
-          go_to "$(($HEADER_LEN + $(get_cur_options_len) + $FOOTER_LEN))" 0
-          echo >&2
-          echo "$option"
-          return
-        fi
-        ;;
-      UP)
-        go_to "$(($HEADER_LEN + $selected))"
-        print_option "$(get_selected_option)"
+    ENTER)
+      declare option="$(get_selected_option)"
+      if [[ "$opt" != "" ]]; then
+        go_to "$(($HEADER_LEN + $(get_cur_options_len) + $FOOTER_LEN))" 0
+        echo >&2
+        echo "$option"
+        return
+      fi
+      ;;
+    UP)
+      go_to "$(($HEADER_LEN + $selected))"
+      print_option "$(get_selected_option)"
 
-        ((selected--))
-        declare cur_list_len=$(get_cur_options_len)
-        selected=$((($selected + $cur_list_len) % $cur_list_len))
+      ((selected--))
+      declare cur_list_len=$(get_cur_options_len)
+      selected=$((($selected + $cur_list_len) % $cur_list_len))
 
-        go_to "$(($HEADER_LEN + $selected))"
-        print_option_selected "$(get_selected_option)"
-        [ $FLAG_SEARCH == true ] && go_to_search
-        ;;
-      DOWN)
-        go_to "$(($HEADER_LEN + $selected))"
-        print_option "$(get_selected_option)"
+      go_to "$(($HEADER_LEN + $selected))"
+      print_option_selected "$(get_selected_option)"
+      [ $FLAG_SEARCH == true ] && go_to_search
+      ;;
+    DOWN)
+      go_to "$(($HEADER_LEN + $selected))"
+      print_option "$(get_selected_option)"
 
-        ((selected++))
-        declare cur_list_len=$(get_cur_options_len)
-        selected=$((($selected + $cur_list_len) % $cur_list_len))
+      ((selected++))
+      declare cur_list_len=$(get_cur_options_len)
+      selected=$((($selected + $cur_list_len) % $cur_list_len))
 
-        go_to "$(($HEADER_LEN + $selected))"
-        print_option_selected "$(get_selected_option)"
-        [[ $FLAG_SEARCH == true ]] && go_to_search
-        ;;
-      LEFT)
-        if [[ $FLAG_PAGINATION == true ]]; then
-          ((page--))
-          [[ "$page" -lt 0 ]] && page=$(divide_round_down ${#options_filtered[@]} $PAGE_SIZE)
-          draw
-        fi
-        ;;
-      RIGHT)
-        if [[ $FLAG_PAGINATION == true ]]; then
-          ((page++))
-          [[ "$page" -gt "$(divide_round_down ${#options_filtered[@]} $PAGE_SIZE)" ]] && page=0
-          draw
-        fi
-        ;;
-      BACKSPACE)
-        if [[ $FLAG_SEARCH == true && "${#search}" -gt 0 ]]; then
-          search="${search:0:((${#search}-1))}"
-          draw
-        fi
-        ;;
-      *)
-        if [[ $FLAG_SEARCH == true ]]; then
-          page=0
-          search="${search}${key}"
-          draw
-        fi
-        ;;
+      go_to "$(($HEADER_LEN + $selected))"
+      print_option_selected "$(get_selected_option)"
+      [[ $FLAG_SEARCH == true ]] && go_to_search
+      ;;
+    LEFT)
+      if [[ $FLAG_PAGINATION == true ]]; then
+        ((page--))
+        [[ "$page" -lt 0 ]] && page=$(divide_round_down ${#options_filtered[@]} $PAGE_SIZE)
+        draw
+      fi
+      ;;
+    RIGHT)
+      if [[ $FLAG_PAGINATION == true ]]; then
+        ((page++))
+        [[ "$page" -gt "$(divide_round_down ${#options_filtered[@]} $PAGE_SIZE)" ]] && page=0
+        draw
+      fi
+      ;;
+    BACKSPACE)
+      if [[ $FLAG_SEARCH == true && "${#search}" -gt 0 ]]; then
+        search="${search:0:((${#search} - 1))}"
+        draw
+      fi
+      ;;
+    *)
+      if [[ $FLAG_SEARCH == true ]]; then
+        page=0
+        search="${search}${key}"
+        draw
+      fi
+      ;;
     esac
   done
 }
@@ -226,50 +230,50 @@ menu() {
 # If script called directly
 if [[ "${BASH_SOURCE[0]}" == "${0}" ]]; then
   readonly GITMOJI=(
-  "🐛 BUGFIX"
-  "✨ FEATURE"
-  "♿️ ACCESSIBILITY"
-  "👽️ ALIEN"
-  "📈 ANALYTICS"
-  "💫 ANIMATION"
-  "🏗️  ARCHITECTURE"
-  "🛂 AUTHORIZATION"
-  "👷 CI"
-  "💡 COMMENTS"
-  "🔧 CONFIG"
-  "🧐 DATA"
-  "🗃️  DATABASE"
-  "🚀 DEPLOY"
-  "⚰️  DEPRECATE"
-  "📝 DOCUMENTATION"
-  "🚩 FLAG"
-  "🩺 HEALTHCHECK"
-  "🚑️ HOTFIX"
-  "🌐 I18N"
-  "🧱 INFRASTRUCTURE"
-  "📄 LICENSE"
-  "🚨 LINT"
-  "🔊 LOGGING"
-  "🧵 MULTITHREADING"
-  "📦️ PACKAGE"
-  "🩹 PATCH"
-  "⚡️ PERFORMANCE"
-  "♻️  REFACTOR"
-  "🔥 REMOVE"
-  "🚚 RENAME"
-  "📱 RESPONSIVE"
-  "🔨 SCRIPT"
-  "🔒️ SECURITY"
-  "🔍️ SEO"
-  "💸 SPONSORSHIP"
-  "🎨 STRUCTURE"
-  "💄 STYLE"
-  "🔖 TAG"
-  "🧪 TEST"
-  "🏷️  TYPES"
-  "✏️  TYPO"
-  "🦺 VALIDATION"
-  "🚧 WIP"
+    "🐛 BUGFIX"
+    "✨ FEATURE"
+    "♿️ ACCESSIBILITY"
+    "👽️ ALIEN"
+    "📈 ANALYTICS"
+    "💫 ANIMATION"
+    "🏗️  ARCHITECTURE"
+    "🛂 AUTHORIZATION"
+    "👷 CI"
+    "💡 COMMENTS"
+    "🔧 CONFIG"
+    "🧐 DATA"
+    "🗃️  DATABASE"
+    "🚀 DEPLOY"
+    "⚰️  DEPRECATE"
+    "📝 DOCUMENTATION"
+    "🚩 FLAG"
+    "🩺 HEALTHCHECK"
+    "🚑️ HOTFIX"
+    "🌐 I18N"
+    "🧱 INFRASTRUCTURE"
+    "📄 LICENSE"
+    "🚨 LINT"
+    "🔊 LOGGING"
+    "🧵 MULTITHREADING"
+    "📦️ PACKAGE"
+    "🩹 PATCH"
+    "⚡️ PERFORMANCE"
+    "♻️  REFACTOR"
+    "🔥 REMOVE"
+    "🚚 RENAME"
+    "📱 RESPONSIVE"
+    "🔨 SCRIPT"
+    "🔒️ SECURITY"
+    "🔍️ SEO"
+    "💸 SPONSORSHIP"
+    "🎨 STRUCTURE"
+    "💄 STYLE"
+    "🔖 TAG"
+    "🧪 TEST"
+    "🏷️  TYPES"
+    "✏️  TYPO"
+    "🦺 VALIDATION"
+    "🚧 WIP"
   )
 
   echo
