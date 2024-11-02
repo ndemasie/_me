@@ -1,1 +1,0 @@
-alias jqq="/Users/${USER}/code/jqq"
