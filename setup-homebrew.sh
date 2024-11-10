@@ -7,13 +7,15 @@ fi
 
 # # SETUP
 
-# brew list gum &>/dev/null || brew install gum
+# brew list bash-completion &>/dev/null || brew install bash-completion
 # brew list ffmpeg &>/dev/null || brew install ffmpeg
-# brew list tmux &>/dev/null || brew install tmux
+# brew list gum &>/dev/null || brew install gum
 # brew list python3 &>/dev/null || brew install python3
+# brew list tmux &>/dev/null || brew install tmux
 
 # # TOOLS
 
+## Bash Completion
 # brew list git &>/dev/null || brew install git
 # brew list jq &>/dev/null || brew install jq
 # brew list deno &>/dev/null || brew install deno
@@ -25,28 +27,28 @@ fi
 
 # brew list warp &>/dev/null || brew install --cask warp
 
-# Rectangle - https://rectangleapp.com/pro
-# Superior window management on macOS
+## Rectangle - https://rectangleapp.com/pro
+## Superior window management on macOS
 # brew list rectangle &>/dev/null || brew install --cask rectangle
 
-# Maccy - https://maccy.app
-# Clipboard manager for macOS which does one job - keep your copy history at hand.
+## Maccy - https://maccy.app
+## Clipboard manager for macOS which does one job - keep your copy history at hand.
 # brew list maccy &>/dev/null || brew install --cask maccy
 
-# MonitorControl - https://github.com/MonitorControl/MonitorControl
-# Controls your external display brightness and volume and shows native OSD.
+## MonitorControl - https://github.com/MonitorControl/MonitorControl
+## Controls your external display brightness and volume and shows native OSD.
 # brew list MonitorControl &>/dev/null || brew install --cask MonitorControl
 
-# MenubarX - https://menubarx.app
-# A powerful menu bar browser
+## MenubarX - https://menubarx.app
+## A powerful menu bar browser
 # brew list menubarx &>/dev/null || brew install --cask menubarx
 
-# Raspberry Pi Imager - https://www.raspberrypi.com/software/
-# Imager for PI hobbiests
+## Raspberry Pi Imager - https://www.raspberrypi.com/software/
+## Imager for PI hobbiests
 # brew list raspberry-pi-imager &>/dev/null || brew install --cask raspberry-pi-imager
 
 # # EXTENSIONS
 
-# Vimari - https://github.com/televator-apps/vimari - https://github.com/vladdoster/homebrew-formulae
-# Vimari is a Safari extension that provides vim style keyboard based navigation.
+## Vimari - https://github.com/televator-apps/vimari - https://github.com/vladdoster/homebrew-formulae
+## Vimari is a Safari extension that provides vim style keyboard based navigation.
 # brew list vimari &>/dev/null || brew install --cask vladdoster/formulae/vimari
