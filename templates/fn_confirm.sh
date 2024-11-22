@@ -10,7 +10,7 @@ function confirm() {
 
   while true; do
     printf "${YELLOW}%s${RESET}" "$prompt"
-    read -r -n 1
+    read -k1 REPLY
     case "${REPLY}" in
     y | Y)
       echo >&2
@@ -28,5 +28,5 @@ function confirm() {
 # DEMO
 # If script called directly
 if [[ "${BASH_SOURCE[0]}" == "${0}" ]]; then
-  confirm "git rebase origin/main" && echo "Yes!" || echo "No!"
+  confirm "Can you say 'Yes' to me?" && echo "Yes!" || echo "No!"
 fi
