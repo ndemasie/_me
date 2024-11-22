@@ -3,7 +3,7 @@
 alias gp="confirm 'git push origin --force' && git push origin --force"
 alias gr="confirm 'git rebase origin/main' && git rebase origin/main"
 
-# delete local branches where remote is :gone
+# Delete local branches where remote is :gone
 function gprune() {
   # Fetch latest
   git fetch --prune --quiet
