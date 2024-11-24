@@ -10,4 +10,4 @@ ln -sf "${HOME}/_me/app/VSCode/keybindings.json" "${HOME}/Library/Application Su
 ln -sf "${HOME}/_me/app/VSCode/snippets" "${HOME}/Library/Application Support/Code/User/snippets"
 
 # Rectangle
-# TODO: Find default config path
+ln -sf "${HOME}/_me/app/Rectangle/com.knollsoft.Rectangle.plist" "${HOME}/Library/Preferences/com.knollsoft.Rectangle.plist"
