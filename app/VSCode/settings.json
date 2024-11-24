@@ -85,7 +85,11 @@
     "vue-html",
     "vue-postcss"
   ],
-  "cSpell.userWords": ["Liebling", "Masie", "ndemasie"],
+  "cSpell.userWords": [
+    "Liebling",
+    "Masie",
+    "ndemasie"
+  ],
   "diffEditor.ignoreTrimWhitespace": false,
   "diffEditor.maxComputationTime": 0,
   "editor.accessibilitySupport": "off",
@@ -99,7 +103,10 @@
   "editor.minimap.enabled": false,
   "editor.tabSize": 2,
   "editor.unicodeHighlight.ambiguousCharacters": false,
-  "eslint.validate": ["javascript", "typescript"],
+  "eslint.validate": [
+    "javascript",
+    "typescript"
+  ],
   "explorer.confirmDragAndDrop": true,
   "extensions.ignoreRecommendations": true,
   "files.defaultLanguage": "${activeEditorLanguage}",
@@ -131,5 +138,9 @@
   "update.showReleaseNotes": false,
   "window.confirmBeforeClose": "keyboardOnly",
   "window.zoomLevel": 2,
-  "workbench.startupEditor": "none"
+  "workbench.startupEditor": "none",
+  "workbench.editorAssociations": {
+    "*.copilotmd": "vscode.markdown.preview.editor",
+    "*.plist": "default"
+  }
 }

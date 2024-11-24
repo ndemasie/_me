@@ -182,7 +182,7 @@
       "string" : "{\"b\":28,\"t\":27,\"id\":0,\"l\":25,\"bl\":13,\"r\":26,\"tl\":15,\"br\":14,\"tr\":16}"
     },
     "manualSpecs" : {
-      "string" : "[{\"name\":\"Display Top Left\",\"h\":\".75\",\"display\":-3,\"w\":\".75\",\"id\":46,\"loc\":5,\"shortcut\":{\"keyCode\":34,\"modifierFlags\":786432}},{\"w\":\"1\",\"id\":50,\"h\":\".8\",\"shortcut\":{\"keyCode\":40,\"modifierFlags\":786432},\"loc\":7,\"display\":-3,\"name\":\"Display Right Bottom\"},{\"display\":-3,\"name\":\"Display Most Left\",\"loc\":3,\"id\":77,\"shortcut\":{\"modifierFlags\":786432,\"keyCode\":38},\"w\":\".96\",\"h\":\"1\"},{\"id\":84,\"h\":\"1144\",\"shortcut\":{\"modifierFlags\":786432,\"keyCode\":37},\"y\":\"1440\",\"loc\":9,\"display\":-3,\"name\":\"Display Left Top Right\",\"title\":\"ZNRVxFBDEIFV1GgkE9KqzZlqhEZaL7dLA38DsnuwIFlfuasGHCFuZW12hg==\",\"w\":\"1935\",\"x\":\"-1143\"}]"
+      "string" : "[{\"h\":\".75\",\"display\":-3,\"shortcut\":{\"keyCode\":34,\"modifierFlags\":786432},\"name\":\"Display Top Left\",\"id\":46,\"w\":\".80\",\"loc\":5},{\"w\":\"1\",\"id\":50,\"name\":\"Display Right Bottom\",\"display\":-3,\"loc\":7,\"h\":\".65\",\"shortcut\":{\"modifierFlags\":786432,\"keyCode\":40}},{\"w\":\".96\",\"shortcut\":{\"keyCode\":38,\"modifierFlags\":786432},\"name\":\"Display Most Left\",\"id\":77,\"h\":\"1\",\"display\":-3,\"loc\":3},{\"h\":\".75\",\"name\":\"Display Top Right\",\"id\":92,\"w\":\".80\",\"shortcut\":{\"modifierFlags\":786432,\"keyCode\":37},\"loc\":6}]"
     },
     "maximizeAcrossDisplays" : {
       "int" : 0
@@ -275,7 +275,7 @@
       "int" : 2
     },
     "reticleColor" : {
-      "string" : "{\"blue\":0.2,\"red\":0.8,\"green\":0.3,\"alpha\":0.5}"
+      "string" : "{\"alpha\":0.5,\"blue\":0.2,\"green\":0.3,\"red\":0.8}"
     },
     "reticleDisplayMinDist" : {
       "float" : 5
@@ -478,30 +478,30 @@
   },
   "shortcuts" : {
     "nextDisplayRatio" : {
-      "keyCode" : 119,
+      "keyCode" : 37,
       "modifierFlags" : 1835008
     },
     "nudgeDown" : {
-      "keyCode" : 121,
-      "modifierFlags" : 262144
+      "keyCode" : 40,
+      "modifierFlags" : 1966080
     },
     "nudgeLeft" : {
-      "keyCode" : 115,
-      "modifierFlags" : 262144
+      "keyCode" : 38,
+      "modifierFlags" : 1966080
     },
     "nudgeRight" : {
-      "keyCode" : 119,
-      "modifierFlags" : 262144
+      "keyCode" : 37,
+      "modifierFlags" : 1966080
     },
     "nudgeUp" : {
-      "keyCode" : 116,
-      "modifierFlags" : 262144
+      "keyCode" : 34,
+      "modifierFlags" : 1966080
     },
     "prevDisplayRatio" : {
-      "keyCode" : 115,
+      "keyCode" : 38,
       "modifierFlags" : 1835008
     }
   },
-  "timestamp" : 753499567.476703,
+  "timestamp" : 754102724.457215,
   "version" : "178"
 }
