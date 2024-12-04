@@ -1,6 +1,9 @@
 {
   "bundleId" : "com.knollsoft.Hookshot",
   "defaults" : {
+    "SUEnableAutomaticChecks" : {
+      "bool" : true
+    },
     "adjacentResizeScreenEdge" : {
       "int" : 0
     },
@@ -16,14 +19,14 @@
     "almostMaximizeWidth" : {
       "float" : 0
     },
+    "altThirdCycle" : {
+      "int" : 0
+    },
     "alternateDefaultShortcuts" : {
       "bool" : false
     },
     "alternateGestureShortcuts" : {
       "bool" : false
-    },
-    "altThirdCycle" : {
-      "int" : 0
     },
     "alwaysAccountForStage" : {
       "int" : 0
@@ -34,11 +37,11 @@
     "analogAdjacentResizing" : {
       "int" : 0
     },
-    "applyGapToEdges" : {
-      "int" : 0
-    },
     "appSpecs" : {
       "string" : "[{\"id\":9,\"shortcut\":{\"keyCode\":111,\"modifierFlags\":786432},\"loc\":0,\"name\":\"Dev Work Group\",\"children\":[{\"x\":\"-2560\",\"display\":-3,\"y\":\"0\",\"id\":2,\"h\":\"1415\",\"bundleId\":\"com.microsoft.VSCode\",\"w\":\"2424\",\"loc\":9},{\"x\":\"0\",\"display\":-3,\"y\":\"0\",\"id\":42,\"h\":\"1017\",\"bundleId\":\"org.mozilla.firefox\",\"w\":\"2560\",\"loc\":9},{\"x\":\"1\",\"display\":-3,\"y\":\"292\",\"id\":43,\"h\":\"1123\",\"bundleId\":\"org.mozilla.firefox\",\"w\":\"2003\",\"loc\":9}],\"isGroup\":true}]"
+    },
+    "applyGapToEdges" : {
+      "int" : 0
     },
     "attemptMatchOnNextPrevDisplay" : {
       "int" : 0
@@ -52,16 +55,22 @@
     "cascadeWidth" : {
       "int" : 0
     },
-    "centeredDirectionalMove" : {
+    "centerHalfCycles" : {
       "int" : 0
     },
-    "centerHalfCycles" : {
+    "centeredDirectionalMove" : {
       "int" : 0
     },
     "checkAnimationUnsnap" : {
       "int" : 0
     },
     "checkFullScreen" : {
+      "int" : 0
+    },
+    "clickMoveMouseButton" : {
+      "int" : 0
+    },
+    "clickResizeMouseButton" : {
       "int" : 0
     },
     "contextMenuModifiers" : {
@@ -78,6 +87,9 @@
     },
     "curtainChangeSize" : {
       "int" : 0
+    },
+    "cycleSizesIsChanged" : {
+      "bool" : false
     },
     "disabledApps" : {
 
@@ -170,7 +182,7 @@
       "string" : "{\"b\":28,\"t\":27,\"id\":0,\"l\":25,\"bl\":13,\"r\":26,\"tl\":15,\"br\":14,\"tr\":16}"
     },
     "manualSpecs" : {
-      "string" : "[{\"w\":\"1935\",\"name\":\"Display Top Left\",\"display\":-3,\"loc\":5,\"h\":\"1144\",\"id\":46,\"shortcut\":{\"keyCode\":115,\"modifierFlags\":786432}},{\"id\":50,\"w\":\"2560\",\"shortcut\":{\"modifierFlags\":786432,\"keyCode\":121},\"display\":-3,\"h\":\"1083\",\"loc\":7,\"name\":\"Display Right Bottom\"},{\"name\":\"Display Most Left\",\"h\":\"1415\",\"loc\":3,\"w\":\"2470\",\"id\":77,\"shortcut\":{\"keyCode\":116,\"modifierFlags\":786432},\"display\":-3},{\"id\":84,\"shortcut\":{\"modifierFlags\":786432,\"keyCode\":119},\"title\":\"jn+CQizJ87rB5ArQWhpY8G+Ss9h9pHA1Lz4XPAqZhWaKcqIV+VvDPLJBCA==\",\"w\":\"1935\",\"h\":\"1144\",\"display\":-3,\"loc\":9,\"name\":\"Display Left Top Right\",\"y\":\"1440\",\"x\":\"-1143\"}]"
+      "string" : "[{\"display\":-3,\"id\":46,\"loc\":5,\"h\":\".7\",\"w\":\".75\",\"shortcut\":{\"keyCode\":115,\"modifierFlags\":786432},\"name\":\"Display Top Left\"},{\"w\":\"1\",\"display\":-3,\"name\":\"Display Right Bottom\",\"h\":\".65\",\"shortcut\":{\"modifierFlags\":786432,\"keyCode\":121},\"id\":50,\"loc\":7},{\"h\":\"1\",\"id\":77,\"w\":\".96\",\"loc\":3,\"shortcut\":{\"keyCode\":116,\"modifierFlags\":786432},\"display\":-3,\"name\":\"Display Most Left\"},{\"w\":\".75\",\"h\":\".7\",\"display\":-3,\"name\":\"Display Left Top Right\",\"title\":\"5kmyWub6dwa5PZIsZG2A\\\/HIaSaspqkGI7qid3K0eGVO2UZ3AxNfeRjV7aA==\",\"loc\":6,\"id\":84,\"shortcut\":{\"keyCode\":119,\"modifierFlags\":786432}}]"
     },
     "maximizeAcrossDisplays" : {
       "int" : 0
@@ -238,11 +250,11 @@
     "quickActionMinDist" : {
       "float" : 17.541534
     },
-    "quickActions" : {
-      "int" : 2
-    },
     "quickActionTimeout" : {
       "double" : 1
+    },
+    "quickActions" : {
+      "int" : 2
     },
     "relaunchOpensMenu" : {
       "bool" : false
@@ -253,17 +265,17 @@
     "resizeOnDirectionalMove" : {
       "bool" : false
     },
-    "restartOnWakeDelay" : {
-      "float" : 0
-    },
     "restToOneTouches" : {
       "int" : 0
+    },
+    "restartOnWakeDelay" : {
+      "float" : 0
     },
     "reticle" : {
       "int" : 2
     },
     "reticleColor" : {
-      "string" : "{\"blue\":0.2,\"red\":0.8,\"green\":0.3,\"alpha\":0.5}"
+      "string" : "{\"green\":0.3,\"red\":0.8,\"alpha\":0.5,\"blue\":0.2}"
     },
     "reticleDisplayMinDist" : {
       "float" : 5
@@ -292,14 +304,14 @@
     "screenEdgeGapRight" : {
       "float" : 0
     },
-    "screenEdgeGapsOnMainScreenOnly" : {
-      "bool" : false
-    },
     "screenEdgeGapTop" : {
       "float" : 0
     },
     "screenEdgeGapTopNotch" : {
       "float" : 0
+    },
+    "screenEdgeGapsOnMainScreenOnly" : {
+      "bool" : false
     },
     "scrollEdgePauseDistance" : {
       "float" : 60
@@ -309,6 +321,9 @@
     },
     "scrollTriggerIncrements" : {
       "float" : 0.1
+    },
+    "selectedCycleSizes" : {
+      "int" : 0
     },
     "shortEdgeSnapAreaSize" : {
       "float" : 145
@@ -355,10 +370,10 @@
     "stashAnimation" : {
       "int" : 0
     },
-    "stashClearedByOtherActions" : {
+    "stashClearScreenEdge" : {
       "int" : 0
     },
-    "stashClearScreenEdge" : {
+    "stashClearedByOtherActions" : {
       "int" : 0
     },
     "stashCursorBoxWidth" : {
@@ -396,9 +411,6 @@
     },
     "subsequentExecutionMode" : {
       "int" : 0
-    },
-    "SUEnableAutomaticChecks" : {
-      "bool" : true
     },
     "systemWideMouseDown" : {
       "int" : 0
@@ -451,6 +463,9 @@
     "winDownDefaultAction" : {
       "int" : 0
     },
+    "winModFlags" : {
+      "int" : 0
+    },
     "windowSnapping" : {
       "int" : 2
     },
@@ -458,9 +473,6 @@
       "float" : 3
     },
     "windowToFront" : {
-      "int" : 0
-    },
-    "winModFlags" : {
       "int" : 0
     }
   },
@@ -498,6 +510,6 @@
       "modifierFlags" : 1835008
     }
   },
-  "timestamp" : 749870608.65789,
-  "version" : "167"
+  "timestamp" : 755013058.5114,
+  "version" : "178"
 }
