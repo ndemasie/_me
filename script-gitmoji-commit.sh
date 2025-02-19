@@ -1,8 +1,8 @@
 #!/usr/bin/env bash
 
 # set -o errexit   # abort on nonzero exitstatus
-set -o nounset   # abort on unbound variable
-set -o pipefail  # don't hide errors within pipes
+set -o nounset  # abort on unbound variable
+set -o pipefail # don't hide errors within pipes
 
 # Imports
 source "$(dirname "$0")/templates/fn_log.sh"
@@ -84,12 +84,12 @@ _cleanup() {
   printf "%s\n" "Exiting..."
 }
 
-_set_args(){
+_set_args() {
   while [ "${1:-}" != "" ]; do
     case "$1" in
-      -d|--debug) DEBUG=true ;;
-      -v|--verbose) VERBOSE=true ;;
-      -h|--help) usage && exit 0 ;;
+    -d | --debug) DEBUG=true ;;
+    -v | --verbose) VERBOSE=true ;;
+    -h | --help) usage && exit 0 ;;
     esac
     shift
   done
@@ -101,7 +101,7 @@ _validate_run() {
     exit 1
   fi
 
-  if ! command -v git &> /dev/null; then
+  if ! command -v git &>/dev/null; then
     log --error "Git is required"
     exit 1
   fi
@@ -123,7 +123,7 @@ main() {
   [[ $VERBOSE == true ]] && log --info "Verbose enabled"
   echo
 
-  declare TICKET_NUMBER_REGEXP="[0-9]{$(($TICKET_NUMBER_LEN-1)),$TICKET_NUMBER_LEN}"
+  declare TICKET_NUMBER_REGEXP="[0-9]{$(($TICKET_NUMBER_LEN - 1)),$TICKET_NUMBER_LEN}"
   declare GIT_BRANCH=$(git branch --show-current)
 
   declare ticket_type
@@ -159,16 +159,23 @@ main() {
 
   # Read ticket description
   if [[ -z $ticket_description ]]; then
-    declare exclude_words_regexp=$(local IFS="|"; echo "${TOP_WORDS_EXCLUDED[*]:-}";)
-    declare top_path="$({ git diff --name-only; git diff --name-only --staged; git ls-files --others --exclude-standard; } \
-      | cut -d '/' -f 1 \
-      | sed -E -e "s/$exclude_words_regexp\///g" -e 's/\//>/g' \
-      | sort \
-      | uniq --count \
-      | sort --sort=numeric --reverse \
-      | head --lines=1 \
-      | sed -E -e 's/[0-9 ]//g')"
-    top_path="$(tr '[:lower:]' '[:upper:]' <<< ${top_path:0:1})${top_path:1}"
+    declare exclude_words_regexp=$(
+      local IFS="|"
+      echo "${TOP_WORDS_EXCLUDED[*]:-}"
+    )
+    declare top_path="$({
+      git diff --name-only
+      git diff --name-only --staged
+      git ls-files --others --exclude-standard
+    } |
+      cut -d '/' -f 1 |
+      sed -E -e "s/$exclude_words_regexp\///g" -e 's/\//>/g' |
+      sort |
+      uniq --count |
+      sort --sort=numeric --reverse |
+      head --lines=1 |
+      sed -E -e 's/[0-9 ]//g')"
+    top_path="$(tr '[:lower:]' '[:upper:]' <<<${top_path:0:1})${top_path:1}"
 
     printf "${GO_UP}"
     printf "${C_MAGENTA}  %s #%d: %s - ${C_RESET}" "${ticket_type}" "${ticket_number}" "${top_path}" >&2
@@ -178,9 +185,10 @@ main() {
 
   # Compose git info
   if [[ -z $branch_name ]]; then
-    branch_name=$(echo "${ticket_type}/${ticket_number}-${ticket_description}" \
-      | sed -E -e 's/:|;|,//g' -E -e 's/ -| -|  / /g' -e 's/ +/-/g' \
-      | tr '[:upper:]' '[:lower:]' \
+    branch_name=$(
+      echo "${ticket_type}/${ticket_number}-${ticket_description}" |
+        sed -E -e 's/:|;|,//g' -E -e 's/ -| -|  / /g' -e 's/ +/-/g' |
+        tr '[:upper:]' '[:lower:]'
     )
   fi
 
@@ -209,9 +217,9 @@ main() {
   # Unstage prohibited files
   if [[ -n $GIT_EXCLUDE_REGEX ]]; then
     log --trace "Unstage any exlcude files"
-    declare prohibited_files="$(git diff --name-only --staged \
-      | grep --regex="${GIT_EXCLUDE_REGEX}" \
-      | uniq)"
+    declare prohibited_files="$(git diff --name-only --staged |
+      grep --regex="${GIT_EXCLUDE_REGEX}" |
+      uniq)"
 
     if [[ -n "${prohibited_files}" ]]; then
       echo "${prohibited_files}" | xargs -r git reset
@@ -244,11 +252,11 @@ main() {
   # Reapply stash
   if [[ -n $GIT_EXCLUDE_REGEX ]]; then
     log --trace "Reapplying stash ${C_GREEN}tmp/${branch_name}${C_RESET}"
-    git stash list \
-      | grep "tmp/${branch_name}" \
-      | cut -d ':' -f 1 \
-      | head --lines=1 \
-      | xargs -r git stash pop
+    git stash list |
+      grep "tmp/${branch_name}" |
+      cut -d ':' -f 1 |
+      head --lines=1 |
+      xargs -r git stash pop
   fi
 
   return 0
