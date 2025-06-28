@@ -1,5 +1,4 @@
 {
-  "Lua.telemetry.enable": false,
   "[astro]": {
     "editor.defaultFormatter": "astro-build.astro-vscode"
   },
@@ -92,6 +91,8 @@
   ],
   "diffEditor.ignoreTrimWhitespace": false,
   "diffEditor.maxComputationTime": 0,
+  "docker.extension.dockerEngineAvailabilityPrompt": false,
+  "docker.extension.enableComposeLanguageServer": false,
   "editor.accessibilitySupport": "off",
   "editor.codeActionsOnSave": {
     "source.fixAll.eslint": "explicit"
@@ -114,6 +115,7 @@
   "git.autofetch": true,
   "git.confirmSync": false,
   "git.ignoreRebaseWarning": true,
+  "github.copilot.nextEditSuggestions.enabled": true,
   "githubPullRequests.commentExpandState": "collapseAll",
   "githubPullRequests.createOnPublishBranch": "never",
   "githubPullRequests.fileListLayout": "tree",
@@ -125,6 +127,7 @@
   "gitlens.menus": false,
   "gitlens.views.branches.files.layout": "tree",
   "liveServer.settings.donotShowInfoMsg": true,
+  "Lua.telemetry.enable": false,
   "redhat.telemetry.enabled": false,
   "search.exclude": {
     "**/*.code-search": true,
@@ -138,9 +141,9 @@
   "update.showReleaseNotes": false,
   "window.confirmBeforeClose": "keyboardOnly",
   "window.zoomLevel": 2,
-  "workbench.startupEditor": "none",
   "workbench.editorAssociations": {
     "*.copilotmd": "vscode.markdown.preview.editor",
     "*.plist": "default"
-  }
+  },
+  "workbench.startupEditor": "none"
 }

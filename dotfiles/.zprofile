@@ -18,5 +18,6 @@ for secret in $HOME/_me/secrets/.secrets*(.); do
 done
 
 # Update PATH
-PATH="$HOME/.bun/bin:$PATH"                     # Bun
-PATH="$(python3 -m site --user-base)/bin:$PATH" # Python3
+PATH="$HOME/.bun/bin:$PATH"              # Bun
+# PATH="/usr/local/sbin:$PATH"             # Homebrew /usr/local/sbin
+# PATH="$(brew --prefix python)/bin:$PATH" # Python3

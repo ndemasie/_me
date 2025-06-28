@@ -10,12 +10,11 @@ fi
 # brew list bash-completion &>/dev/null || brew install bash-completion
 # brew list ffmpeg &>/dev/null || brew install ffmpeg
 # brew list gum &>/dev/null || brew install gum
-# brew list python3 &>/dev/null || brew install python3
+# brew list python3 &>/dev/null || brew install python3 # Not recommended?
 # brew list tmux &>/dev/null || brew install tmux
 
 # # TOOLS
 
-## Bash Completion
 # brew list git &>/dev/null || brew install git
 # brew list jq &>/dev/null || brew install jq
 # brew list deno &>/dev/null || brew install deno
