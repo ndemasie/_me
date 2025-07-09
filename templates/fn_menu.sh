@@ -74,7 +74,7 @@ menu() {
   ensure_space() {
     declare size=$(stty size)
     declare pos=$(get_cursor_position)
-    declare diff=$((${size%% *} - ${pos%%;*} - $HEADER_LEN - $LIST_LEN - $FOOTER_LEN))
+    declare diff=$((${size%% *} - ${pos%%;*} - $HEADER_LEN - $LIST_LEN))
     if [[ $diff -le 0 ]]; then
       for i in $LIST_LEN; do echo >&2; done
       printf "\033[$((${pos%;*} + $diff - 1));0H${CLEAR_LINE}\n" >&2
@@ -82,9 +82,12 @@ menu() {
   }
 
   declare OPTIONS=("$@")
+
   declare LIST_LEN=$(min -n $PAGE_SIZE ${#OPTIONS[@]})
-  declare HEADER_LEN=$([[ $FLAG_SEARCH == true ]] && echo "2" || echo "0")
-  declare FOOTER_LEN=$([[ $FLAG_PAGINATION == true ]] && echo "2" || echo "0")
+  declare SEARCH_LEN=$([[ $FLAG_SEARCH == true ]] && echo "1" || echo "0")
+  declare PAGINATION_LEN=$([[ $FLAG_PAGINATION == true ]] && echo "1" || echo "0")
+  declare HEADER_LEN=$(($SEARCH_LEN + $PAGINATION_LEN))
+
   declare FILL_EMPTY=$({
     declare max
     for opt in "${OPTIONS[@]}"; do
@@ -129,7 +132,13 @@ menu() {
     go_to
     if [[ $FLAG_SEARCH == true ]]; then
       printf "${CLEAR_LINE}${C_RESET}%s: %s\n" "Search" "$search" >&2
-      printf "${CLEAR_LINE}${C_RESET}\n" >&2
+    fi
+
+    if [[ $FLAG_PAGINATION == true ]]; then
+      printf "${CLEAR_LINE}${C_RESET}%d-%d / %d\n" \
+        "$(($PAGE_SIZE * $page + 1))" \
+        "$(min -n $(($PAGE_SIZE * ($page + 1))) "${#options_filtered[@]}")" \
+        "${#options_filtered[@]}" >&2
     fi
 
     for ((i = 0; i < $LIST_LEN; i++)); do
@@ -141,15 +150,6 @@ menu() {
         print_option "$option"
       fi
     done
-
-    if [[ $FLAG_PAGINATION == true ]]; then
-      printf "${CLEAR_LINE}${C_RESET}\n" >&2
-      printf "${CLEAR_LINE}${C_RESET}%s %d-%d / %d\n" \
-        "Results:" \
-        "$(($PAGE_SIZE * $page + 1))" \
-        "$(min -n $(($PAGE_SIZE * ($page + 1))) "${#options_filtered[@]}")" \
-        "${#options_filtered[@]}" >&2
-    fi
 
     [[ $FLAG_SEARCH == true ]] && go_to_search
   }
@@ -165,7 +165,7 @@ menu() {
     ENTER)
       declare option="$(get_selected_option)"
       if [[ "$opt" != "" ]]; then
-        go_to "$(($HEADER_LEN + $(get_cur_options_len) + $FOOTER_LEN))" 0
+        go_to "$(($HEADER_LEN + $(get_cur_options_len)))" 0
         echo >&2
         echo "$option"
         return
