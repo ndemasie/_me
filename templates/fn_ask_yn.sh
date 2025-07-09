@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-source "$(dirname "$0")/fn_log.sh"
+source "$(dirname "${BASH_SOURCE[0]}")/fn_log.sh"
 
 ask_yn() {
   local GOTO_TOP="\e[2A"
