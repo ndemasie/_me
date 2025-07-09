@@ -17,10 +17,13 @@ declare GO_UP="\033[A\033[80D"
 
 # CONSTS
 declare TICKET_NUMBER_LEN=3
-declare TOP_WORDS_EXCLUDED=("")
+declare TOP_WORDS_EXCLUDED=("src")
 declare GIT_MAIN_BRANCH="main"
 declare GIT_EXCLUDE_REGEX=".env\.*"
-declare GITMOJI_OPTIONS=(
+declare GITMOJI_OPTIONS=()
+declare MENU_SETTINGS="--search --page 10"
+
+declare GITMOJI_OPTIONS_DEFAULT=(
   "🐛 BUGFIX"
   "✨ FEATURE"
   "♿️ ACCESSIBILITY"
@@ -87,12 +90,22 @@ _cleanup() {
 _set_args() {
   while [ "${1:-}" != "" ]; do
     case "$1" in
+    --ticket-number-length) shift && TICKET_NUMBER_LEN="$1" ;;
+    --top-words-excluded) shift && TOP_WORDS_EXCLUDED+=("$1") ;;
+    --git-main-branch) shift && GIT_MAIN_BRANCH="$1" ;;
+    --git-exclude-regex) shift && GIT_EXCLUDE_REGEX="$1" ;;
+    --menu-settings) shift && MENU_SETTINGS="$1" ;;
+    -o | --option) shift && GITMOJI_OPTIONS+=("$1") ;;
     -d | --debug) DEBUG=true ;;
     -v | --verbose) VERBOSE=true ;;
     -h | --help) usage && exit 0 ;;
     esac
     shift
   done
+
+  if [ "${#GITMOJI_OPTIONS[@]}" -eq 0 ]; then
+    GITMOJI_OPTIONS=("${GITMOJI_OPTIONS_DEFAULT[@]}")
+  fi
 }
 
 _validate_run() {
@@ -128,7 +141,9 @@ main() {
 
   declare ticket_type
   declare ticket_number
-  declare ticket_description
+  declare ticket_topic
+  declare ticket_title
+  # declare ticket_description
   declare branch_name
   declare commit_message
 
@@ -137,7 +152,7 @@ main() {
 
     if ask_yn "Do you want to continue on ${C_GREEN}${GIT_BRANCH}${C_RESET}? "; then
       branch_name="${GIT_BRANCH}"
-      ticket_type=$(echo "${GIT_BRANCH%/*}" | tr '[:lower:]' '[:upper:]')
+      ticket_type=$(echo "${GIT_BRANCH%/*}" | tr '[:upper:]' '[:lower:]')
       ticket_number=$(echo "${GIT_BRANCH}" | grep -E --only-matching --regexp "$TICKET_NUMBER_REGEXP")
     fi
     echo
@@ -146,53 +161,60 @@ main() {
   # Read ticket type
   if [[ -z $ticket_type ]]; then
     echo
-    declare menu_option="$(menu --search --page 10 "${GITMOJI_OPTIONS[@]}")"
-    ticket_type=${menu_option##* }
+    declare menu_option="$(menu $MENU_SETTINGS "${GITMOJI_OPTIONS[@]}")"
+    ticket_type=$(echo "${menu_option##* }" | tr '[:upper:]' '[:lower:]')
+  fi
+
+  # Read ticket topic
+  if [[ -z $ticket_topic ]]; then
+    printf "${GO_UP}"
+    printf "${C_MAGENTA}  %s(${C_RESET}" "${ticket_type}" >&2
+    read -r -e
+    ticket_topic=$(echo "${REPLY}" | xargs -r | tr '[:upper:]' '[:lower:]')
   fi
 
   # Read ticket number
   while [[ ! "${ticket_number:-}" =~ ^${TICKET_NUMBER_REGEXP}$ ]]; do
-    printf "${C_MAGENTA}  %s #${C_RESET}" "${ticket_type}" >&2
+    printf "${C_MAGENTA}  %s(%s): #${C_RESET}" "${ticket_type}" "${ticket_topic}" >&2
     read -r -e -n "$TICKET_NUMBER_LEN"
     ticket_number="${REPLY}"
   done
 
-  # Read ticket description
-  if [[ -z $ticket_description ]]; then
-    declare exclude_words_regexp=$(
-      local IFS="|"
-      echo "${TOP_WORDS_EXCLUDED[*]:-}"
-    )
-    declare top_path="$({
-      git diff --name-only
-      git diff --name-only --staged
-      git ls-files --others --exclude-standard
-    } |
-      cut -d '/' -f 1 |
-      sed -E -e "s/$exclude_words_regexp\///g" -e 's/\//>/g' |
-      sort |
-      uniq --count |
-      sort --sort=numeric --reverse |
-      head --lines=1 |
-      sed -E -e 's/[0-9 ]//g')"
-    top_path="$(tr '[:lower:]' '[:upper:]' <<<${top_path:0:1})${top_path:1}"
+  # Read ticket title
+  if [[ -z $ticket_title ]]; then
+    # declare exclude_words_regexp=$(
+    #   local IFS="|"
+    #   echo "${TOP_WORDS_EXCLUDED[*]:-}"
+    # )
+    # declare top_path="$({
+    #   git diff --name-only
+    #   git diff --name-only --staged
+    #   git ls-files --others --exclude-standard
+    # } |
+    #   cut -d '/' -f 1 |
+    #   sed -E -e "s/$exclude_words_regexp\///g" -e 's/\//>/g' |
+    #   sort |
+    #   uniq --count |
+    #   sort --sort=numeric --reverse |
+    #   head --lines=1 |
+    #   sed -E -e 's/[0-9 ]//g' |
+    #   tr '[:upper:]' '[:lower:]')"
 
     printf "${GO_UP}"
-    printf "${C_MAGENTA}  %s #%d: %s - ${C_RESET}" "${ticket_type}" "${ticket_number}" "${top_path}" >&2
+    printf "${C_MAGENTA}  %s(%s): #%d - ${C_RESET}" "${ticket_type}" "${ticket_topic}" "${ticket_number}" >&2
     read -r -e
-    ticket_description=$(echo "${top_path} - ${REPLY}" | xargs -r)
+    ticket_title=$(echo "${REPLY}" | xargs -r | tr '[:upper:]' '[:lower:]')
   fi
 
   # Compose git info
   if [[ -z $branch_name ]]; then
     branch_name=$(
-      echo "${ticket_type}/${ticket_number}-${ticket_description}" |
-        sed -E -e 's/:|;|,//g' -E -e 's/ -| -|  / /g' -e 's/ +/-/g' |
-        tr '[:upper:]' '[:lower:]'
+      echo "${ticket_type}/${ticket_number}-${ticket_topic}-${ticket_title}" |
+        sed -E -e 's/:|;|,//g' -E -e 's/ -| -|  / /g' -e 's/ +/-/g'
     )
   fi
 
-  commit_message="${ticket_type:0:1}$(echo ${ticket_type:1} | tr '[:upper:]' '[:lower:]'): #${ticket_number} - ${ticket_description}"
+  commit_message="$(printf "%s(%s): #%d - %s" "${ticket_type}" "${ticket_topic}" "${ticket_number}" "${ticket_title}")"
 
   echo
   printf "%s ${C_GREEN}%s${C_RESET}\n" "Branch Name:" "${branch_name}"
