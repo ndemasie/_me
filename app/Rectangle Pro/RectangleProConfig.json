@@ -37,8 +37,11 @@
     "analogAdjacentResizing" : {
       "int" : 0
     },
+    "appLayoutsHideOtherApps" : {
+      "int" : 0
+    },
     "appSpecs" : {
-      "string" : "[{\"id\":9,\"shortcut\":{\"keyCode\":111,\"modifierFlags\":786432},\"loc\":0,\"name\":\"Dev Work Group\",\"children\":[{\"x\":\"-2560\",\"display\":-3,\"y\":\"0\",\"id\":2,\"h\":\"1415\",\"bundleId\":\"com.microsoft.VSCode\",\"w\":\"2424\",\"loc\":9},{\"x\":\"0\",\"display\":-3,\"y\":\"0\",\"id\":42,\"h\":\"1017\",\"bundleId\":\"org.mozilla.firefox\",\"w\":\"2560\",\"loc\":9},{\"x\":\"1\",\"display\":-3,\"y\":\"292\",\"id\":43,\"h\":\"1123\",\"bundleId\":\"org.mozilla.firefox\",\"w\":\"2003\",\"loc\":9}],\"isGroup\":true}]"
+      "string" : "[{\"id\":9,\"children\":[{\"bundleId\":\"com.microsoft.VSCode\",\"h\":\"1415\",\"id\":2,\"x\":\"-2560\",\"y\":\"0\",\"display\":-3,\"loc\":9,\"w\":\"2424\"},{\"h\":\"1017\",\"bundleId\":\"org.mozilla.firefox\",\"loc\":9,\"y\":\"0\",\"id\":42,\"w\":\"2560\",\"display\":-3,\"x\":\"0\"},{\"id\":43,\"h\":\"1123\",\"display\":-3,\"y\":\"292\",\"loc\":9,\"bundleId\":\"org.mozilla.firefox\",\"w\":\"2003\",\"x\":\"1\"}],\"loc\":0,\"shortcut\":{\"keyCode\":111,\"modifierFlags\":786432},\"name\":\"Dev Work Group\",\"isGroup\":true}]"
     },
     "applyGapToEdges" : {
       "int" : 0
@@ -94,6 +97,9 @@
     "disabledApps" : {
 
     },
+    "dockSizePollSeconds" : {
+      "double" : 0
+    },
     "doubleClickTitleBar" : {
       "int" : 0
     },
@@ -134,10 +140,10 @@
       "int" : 0
     },
     "gapSize" : {
-      "float" : 0
+      "double" : 0
     },
     "gestures" : {
-      "string" : "[1,{\"flags\":0,\"trail\":4},4,{\"flags\":0,\"trail\":3},33,{\"flags\":8650752,\"trail\":0},32,{\"flags\":8388608,\"trail\":0},0,{\"flags\":0,\"trail\":3},5,{\"flags\":0,\"trail\":4},2,{\"flags\":0,\"trail\":1},19,{\"flags\":0,\"trail\":2},10,{\"flags\":0,\"trail\":2},35,{\"flags\":0,\"trail\":0},11,{\"flags\":0,\"trail\":1}]"
+      "string" : "[1,{\"trail\":4,\"flags\":0},2,{\"trail\":1,\"flags\":0},0,{\"trail\":3,\"flags\":0},11,{\"flags\":0,\"trail\":1},4,{\"flags\":0,\"trail\":3},10,{\"flags\":0,\"trail\":2},32,{\"flags\":8388608,\"trail\":0},33,{\"trail\":0,\"flags\":8650752},35,{\"flags\":0,\"trail\":0},19,{\"trail\":2,\"flags\":0},5,{\"trail\":4,\"flags\":0}]"
     },
     "hapticFeedbackOnSnap" : {
       "int" : 0
@@ -163,6 +169,9 @@
     "ignoredSnapAreas" : {
       "int" : 0
     },
+    "keyboardShortcutsEnabled" : {
+      "int" : 0
+    },
     "landscapeSnapAreas" : {
       "string" : "[4,{\"manual\":29,\"action\":36}]"
     },
@@ -182,7 +191,7 @@
       "string" : "{\"b\":28,\"t\":27,\"id\":0,\"l\":25,\"bl\":13,\"r\":26,\"tl\":15,\"br\":14,\"tr\":16}"
     },
     "manualSpecs" : {
-      "string" : "[{\"loc\":5,\"shortcut\":{\"modifierFlags\":786432,\"keyCode\":115},\"id\":46,\"h\":\".7\",\"w\":\".75\",\"name\":\"Display Top Left\",\"display\":-3},{\"loc\":7,\"display\":-3,\"id\":50,\"h\":\".72\",\"name\":\"Display Bottom\",\"w\":\"1\",\"shortcut\":{\"modifierFlags\":786432,\"keyCode\":121}},{\"shortcut\":{\"keyCode\":116,\"modifierFlags\":786432},\"w\":\".96\",\"display\":-3,\"loc\":3,\"id\":77,\"name\":\"Display Most Left\",\"h\":\"1\"},{\"shortcut\":{\"modifierFlags\":786432,\"keyCode\":119},\"id\":84,\"w\":\".75\",\"h\":\".7\",\"title\":\"nTNOVJkKDAPZAk4Dq4FvwPKjyU4GRsmUXxzpqwxM9SKKIpYFfgIcombv6A==\",\"display\":-3,\"loc\":6,\"name\":\"Display Left Top Right\"}]"
+      "string" : "[{\"loc\":5,\"h\":\".7\",\"display\":-3,\"shortcut\":{\"keyCode\":115,\"modifierFlags\":786432},\"w\":\".75\",\"id\":46,\"name\":\"Display Top Left\"},{\"h\":\".72\",\"shortcut\":{\"keyCode\":121,\"modifierFlags\":786432},\"name\":\"Display Bottom\",\"id\":50,\"display\":-3,\"w\":\"1\",\"loc\":7},{\"name\":\"Display Most Left\",\"w\":\".978\",\"h\":\"1\",\"shortcut\":{\"keyCode\":116,\"modifierFlags\":786432},\"id\":77,\"display\":-3,\"loc\":3},{\"id\":84,\"shortcut\":{\"keyCode\":119,\"modifierFlags\":786432},\"w\":\".75\",\"loc\":6,\"display\":-3,\"title\":\"H0u+5vZuLztbxNWw6CQdBtxsPp8IdUxfHHI5MKiyFHuEQPSf2FefgpR2+w==\",\"name\":\"Display Left Top Right\",\"h\":\".7\"}]"
     },
     "maximizeAcrossDisplays" : {
       "int" : 0
@@ -200,10 +209,10 @@
 
     },
     "minimumWindowHeight" : {
-      "float" : 0.25
+      "float" : 0.1
     },
     "minimumWindowWidth" : {
-      "float" : 0.25
+      "float" : 0.1
     },
     "missionControlDragging" : {
       "int" : 0
@@ -215,6 +224,9 @@
       "int" : 250
     },
     "moveCursorAcrossDisplays" : {
+      "int" : 0
+    },
+    "moveSpecsWhenDisplayMoves" : {
       "int" : 0
     },
     "multiWindowAllDisplays" : {
@@ -239,6 +251,9 @@
       "int" : 0
     },
     "performRepeatOnThrow" : {
+      "int" : 0
+    },
+    "portraitLeftRightIsTopBottom" : {
       "int" : 0
     },
     "portraitSnapAreas" : {
@@ -275,7 +290,7 @@
       "int" : 2
     },
     "reticleColor" : {
-      "string" : "{\"red\":0.8,\"green\":0.3,\"blue\":0.2,\"alpha\":0.5}"
+      "string" : "{\"alpha\":0.5,\"green\":0.3,\"blue\":0.2,\"red\":0.8}"
     },
     "reticleDisplayMinDist" : {
       "float" : 5
@@ -445,7 +460,13 @@
     "togggleTodoShortcut" : {
 
     },
+    "toggleShortcutsShortcut" : {
+
+    },
     "traverseSingleScreen" : {
+      "int" : 0
+    },
+    "unhideStashToOriginal" : {
       "int" : 0
     },
     "unhideStashedWhenFrontmost" : {
@@ -466,11 +487,17 @@
     "winModFlags" : {
       "int" : 0
     },
+    "windowPollSeconds" : {
+      "double" : 0.5
+    },
     "windowSnapping" : {
       "int" : 2
     },
     "windowStopVelocity" : {
       "float" : 3
+    },
+    "windowThrowIgnoresWidgets" : {
+      "int" : 0
     },
     "windowToFront" : {
       "int" : 0
@@ -510,6 +537,6 @@
       "modifierFlags" : 1835008
     }
   },
-  "timestamp" : 755036831.66537,
-  "version" : "178"
+  "timestamp" : 765905617.746441,
+  "version" : "188"
 }
