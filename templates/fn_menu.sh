@@ -17,9 +17,18 @@ menu() {
     -s | --search)
       FLAG_SEARCH=true
       ;;
+    -p=* | --page=* | --pagination=*)
+      FLAG_PAGINATION=true
+      PAGE_SIZE="${1#*=}"
+      if [[ "$PAGE_SIZE" =~ ^[0-9]{1,2}$ ]]; then
+        :
+      else
+        PAGE_SIZE=10
+      fi
+      ;;
     -p | --page | --pagination)
       FLAG_PAGINATION=true
-      if [[ "$2" =~ ^[0-9]{0,2}$ ]]; then
+      if [[ "$2" =~ ^[0-9]{1,2}$ ]]; then
         PAGE_SIZE=$2
         shift
       else
