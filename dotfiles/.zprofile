@@ -5,15 +5,15 @@ autoload -U +X compinit && compinit
 autoload -U +X bashcompinit && bashcompinit
 
 # Source fns
-source "$HOME/_me/templates/fn_confirm.sh"
+source "$HOME/#me/templates/fn_confirm.sh"
 
-source "$HOME/_me/fn-close-port-process.sh"
-source "$HOME/_me/fn-docker.sh"
-source "$HOME/_me/fn-git.sh"
-source "$HOME/_me/fn-jqq.sh"
+source "$HOME/#me/fn-close-port-process.sh"
+source "$HOME/#me/fn-docker.sh"
+source "$HOME/#me/fn-git.sh"
+source "$HOME/#me/fn-jqq.sh"
 
 # Load all secrets
-for secret in $HOME/_me/secrets/.secrets*(.); do
+for secret in $HOME/#me/secrets/.secrets*(.); do
   source "$secret"
 done
 
