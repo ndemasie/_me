@@ -21,6 +21,7 @@ fi
 # brew list node &>/dev/null || brew install node
 # brew list typescript &>/dev/null || brew install typescript
 # brew list terraform &>/dev/null || brew install terraform
+# brew list cloudflared &>/dev/null || brew install cloudflared
 
 # # APPS
 
