@@ -16,7 +16,6 @@ fi
 # # TOOLS
 
 # brew list git &>/dev/null || brew install git
-# brew list jq &>/dev/null || brew install jq
 # brew list deno &>/dev/null || brew install deno
 # brew list node &>/dev/null || brew install node
 # brew list typescript &>/dev/null || brew install typescript

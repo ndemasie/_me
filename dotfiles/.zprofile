@@ -10,7 +10,6 @@ source "$HOME/#me/templates/fn_confirm.sh"
 source "$HOME/#me/fn-close-port-process.sh"
 source "$HOME/#me/fn-docker.sh"
 source "$HOME/#me/fn-git.sh"
-source "$HOME/#me/fn-jqq.sh"
 
 alias gf='
 bash "${HOME}/#me/script-gitmoji-commit.sh" \
