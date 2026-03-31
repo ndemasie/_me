@@ -10,3 +10,6 @@ ln -sf "${HOME}/#me/app/Rectangle/com.knollsoft.Rectangle.plist" "${HOME}/Librar
 ln -sf "${HOME}/#me/app/VSCode/settings.json" "${HOME}/Library/Application Support/Code/User/settings.json"
 ln -sf "${HOME}/#me/app/VSCode/keybindings.json" "${HOME}/Library/Application Support/Code/User/keybindings.json"
 ln -sf "${HOME}/#me/app/VSCode/snippets" "${HOME}/Library/Application Support/Code/User/snippets"
+
+# Workflows
+ln -sf "${HOME}/#me/automator/compress-pdf.workflow" "${HOME}/Library/Services/compress-pdf.workflow"
