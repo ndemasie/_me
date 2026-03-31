@@ -12,6 +12,13 @@ source "$HOME/#me/fn-docker.sh"
 source "$HOME/#me/fn-git.sh"
 source "$HOME/#me/fn-jqq.sh"
 
+alias gf='
+bash "${HOME}/#me/script-gitmoji-commit.sh" \
+  --ticket-number-length 2 \
+  --menu-setting "--search" \
+  --menu-setting "--page=7"
+'
+
 # Load all secrets
 for secret in $HOME/#me/secrets/.secrets*(.); do
   source "$secret"
