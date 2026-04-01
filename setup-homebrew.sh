@@ -11,14 +11,20 @@ fi
 # brew list ffmpeg &>/dev/null || brew install ffmpeg
 # brew list gum &>/dev/null || brew install gum
 # brew list python3 &>/dev/null || brew install python3 # Not recommended?
+
+## TMUX - https://github.com/tmux/tmux/wiki
 # brew list tmux &>/dev/null || brew install tmux
+## git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
+
 
 # # TOOLS
 
 # brew list git &>/dev/null || brew install git
+# brew list n &>/dev/null || brew install n
 # brew list deno &>/dev/null || brew install deno
 # brew list node &>/dev/null || brew install node
 # brew list typescript &>/dev/null || brew install typescript
+
 # brew list terraform &>/dev/null || brew install terraform
 # brew list cloudflared &>/dev/null || brew install cloudflared
 
