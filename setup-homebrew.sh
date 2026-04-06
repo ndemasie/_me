@@ -22,9 +22,11 @@ fi
 # brew list bbrew &>/dev/null || brew install bbrew
 # brew list btop &>/dev/null || brew install btop
 # brew list ctop &>/dev/null || brew install ctop
+# brew list gh &>/dev/null || brew install gh
 # brew list git &>/dev/null || brew install git
 # brew list lazydocker &>/dev/null || brew install lazydocker
 # brew list n &>/dev/null || brew install n
+# brew list tree &>/dev/null || brew install tree
 
 # brew list deno &>/dev/null || brew install deno
 # brew list go &>/dev/null || brew install go
@@ -45,6 +47,7 @@ fi
 # brew list sameboy &>/dev/null || brew install --cask sameboy
 # brew list utm &>/dev/null || brew install --cask utm
 # brew list visual-studio-code &>/dev/null || brew install --cask visual-studio-code
+# brew list vlc &>/dev/null || brew install --cask vlc
 # brew list warp &>/dev/null || brew install --cask warp
 
 ## APPS - Failing
