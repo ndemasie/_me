@@ -5,20 +5,11 @@ if ! command -v brew; then
   /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 fi
 
-### SETUP
-
 # brew list bash-completion &>/dev/null || brew install bash-completion
 # brew list ffmpeg &>/dev/null || brew install ffmpeg
 # brew list gum &>/dev/null || brew install gum
 # brew list python3 &>/dev/null || brew install python3 # Not recommended?
-
-## TMUX - https://github.com/tmux/tmux/wiki
-# brew list tmux &>/dev/null || brew install tmux
-## git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
-
-
-### TOOLS
-
+# brew list tmux &>/dev/null || brew install tmux && git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
 # brew list bbrew &>/dev/null || brew install bbrew
 # brew list btop &>/dev/null || brew install btop
 # brew list ctop &>/dev/null || brew install ctop
@@ -37,8 +28,6 @@ fi
 # brew list cloudflared &>/dev/null || brew install cloudflared
 # brew list tailscale &>/dev/null || brew install tailscale
 
-### APPS
-
 # brew list appcleaner &>/dev/null || brew install --cask appcleaner
 # brew list bitwarden &>/dev/null || brew install --cask bitwarden
 # brew list firefox &>/dev/null || brew install --cask firefox
@@ -50,31 +39,15 @@ fi
 # brew list vlc &>/dev/null || brew install --cask vlc
 # brew list warp &>/dev/null || brew install --cask warp
 
-## APPS - Failing
-## brew list brave-browser &>/dev/null || brew install --cask brave-browser
-## brew list docker &>/dev/null || brew install --cask docker
-
-## Rectangle - https://rectangleapp.com/pro
-## Superior window management on macOS
+# brew list xykong/tap/flux-markdown &>/dev/null || brew install --cask xykong/tap/flux-markdown
 # brew list rectangle &>/dev/null || brew install --cask rectangle
-
-## Maccy - https://maccy.app
-## Clipboard manager for macOS which does one job - keep your copy history at hand.
 # brew list maccy &>/dev/null || brew install --cask maccy
-
-## MonitorControl - https://github.com/MonitorControl/MonitorControl
-## Controls your external display brightness and volume and shows native OSD.
 # brew list MonitorControl &>/dev/null || brew install --cask MonitorControl
-
-## MenubarX - https://menubarx.app
-## A powerful menu bar browser
 # brew list menubarx &>/dev/null || brew install --cask menubarx
-
-## Raspberry Pi Imager - https://www.raspberrypi.com/software/
 # brew list raspberry-pi-imager &>/dev/null || brew install --cask raspberry-pi-imager
 
-### EXTENSIONS
-
-## Vimari - https://github.com/televator-apps/vimari - https://github.com/vladdoster/homebrew-formulae
-## Vimari is a Safari extension that provides vim style keyboard based navigation.
 # brew list vimari &>/dev/null || brew install --cask vladdoster/formulae/vimari
+
+## FAILING
+## brew list brave-browser &>/dev/null || brew install --cask brave-browser
+## brew list docker &>/dev/null || brew install --cask docker

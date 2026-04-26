@@ -1,5 +1,4 @@
-# Disables accent key popup
-defaults write -g ApplePressAndHoldEnabled -bool false
+#!/usr/bin/env sh
 
-# Other - App Store
-# Folder Peek Menu - https://sindresorhus.com/folder-peek#non-app-store-version
+## Disables accent key popup
+defaults write -g ApplePressAndHoldEnabled -bool false
