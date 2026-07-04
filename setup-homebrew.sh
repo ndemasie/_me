@@ -31,6 +31,7 @@ fi
 # brew list appcleaner &>/dev/null || brew install --cask appcleaner
 # brew list bitwarden &>/dev/null || brew install --cask bitwarden
 # brew list firefox &>/dev/null || brew install --cask firefox
+# brew list hyperkey &>/dev/null || brew install --cask hyperkey
 # brew list libreoffice &>/dev/null || brew install --cask libreoffice
 # brew list notunes &>/dev/null || brew install --cask notunes
 # brew list sameboy &>/dev/null || brew install --cask sameboy
