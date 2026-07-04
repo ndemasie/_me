@@ -2,6 +2,8 @@
 
 alias gp="confirm 'git push origin --force' && git push origin --force"
 alias gr="confirm 'git rebase origin/main' && git rebase origin/main"
+alias ga="confirm 'git commit --amend --no-edit' && git commit --amend --no-edit"
+
 
 # Delete local branches where remote is :gone
 function gprune() {
