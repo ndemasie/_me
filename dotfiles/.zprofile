@@ -24,6 +24,9 @@ for secret in $HOME/#me/secrets/.secrets*(.); do
 done
 
 # Update PATH
-PATH="$HOME/.bun/bin:$PATH"              # Bun
+PATH="$PATH:/Users/nathandemasie/.docker/bin"
+
 # PATH="/usr/local/sbin:$PATH"             # Homebrew /usr/local/sbin
 # PATH="$(brew --prefix python)/bin:$PATH" # Python3
+
+export PATH
