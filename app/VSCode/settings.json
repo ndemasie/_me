@@ -84,11 +84,6 @@
     "vue-html",
     "vue-postcss"
   ],
-  "cSpell.userWords": [
-    "Liebling",
-    "Masie",
-    "ndemasie"
-  ],
   "diffEditor.ignoreTrimWhitespace": false,
   "diffEditor.maxComputationTime": 0,
   "docker.extension.dockerEngineAvailabilityPrompt": false,
