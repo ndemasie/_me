@@ -35,7 +35,7 @@
       "int" : 0
     },
     "analogAdjacentResizing" : {
-      "int" : 0
+      "int" : 1
     },
     "appLayoutsHideOtherApps" : {
       "int" : 0
@@ -155,7 +155,7 @@
       "double" : 0
     },
     "gestures" : {
-      "string" : "[32,{\"trail\":0,\"flags\":8388608},0,{\"trail\":3,\"flags\":0},1,{\"trail\":4,\"flags\":0},19,{\"trail\":2,\"flags\":0},2,{\"trail\":1,\"flags\":0},4,{\"trail\":3,\"flags\":0},35,{\"trail\":0,\"flags\":0},10,{\"trail\":2,\"flags\":0},33,{\"trail\":0,\"flags\":8650752},5,{\"trail\":4,\"flags\":0},11,{\"trail\":1,\"flags\":0}]"
+      "string" : "[0,{\"flags\":0,\"trail\":3},2,{\"flags\":0,\"trail\":1},32,{\"flags\":8388608,\"trail\":0},19,{\"flags\":0,\"trail\":2},5,{\"flags\":0,\"trail\":4},35,{\"flags\":0,\"trail\":0},1,{\"flags\":0,\"trail\":4},4,{\"flags\":0,\"trail\":3},11,{\"flags\":0,\"trail\":1},10,{\"flags\":0,\"trail\":2},33,{\"flags\":8650752,\"trail\":0}]"
     },
     "hapticFeedbackOnSnap" : {
       "int" : 0
@@ -326,7 +326,7 @@
       "int" : 2
     },
     "reticleColor" : {
-      "string" : "{\"alpha\":0.5,\"blue\":0.2,\"green\":0.3,\"red\":0.8}"
+      "string" : "{\"red\":0.8,\"green\":0.3,\"alpha\":0.5,\"blue\":0.2}"
     },
     "reticleDisplayMinDist" : {
       "float" : 5
@@ -503,7 +503,7 @@
       "double" : 400
     },
     "togggleTodoShortcut" : {
-
+      "string" : "null"
     },
     "toggleShortcutsShortcut" : {
 
@@ -552,31 +552,47 @@
     }
   },
   "shortcuts" : {
+    "bottomLeft" : {
+      "keyCode" : 123,
+      "modifierFlags" : 786432
+    },
+    "bottomRight" : {
+      "keyCode" : 125,
+      "modifierFlags" : 786432
+    },
     "nextDisplayRatio" : {
       "keyCode" : 119,
       "modifierFlags" : 1835008
     },
     "nudgeDown" : {
       "keyCode" : 125,
-      "modifierFlags" : 786432
+      "modifierFlags" : 1572864
     },
     "nudgeLeft" : {
       "keyCode" : 123,
-      "modifierFlags" : 786432
+      "modifierFlags" : 1572864
     },
     "nudgeRight" : {
       "keyCode" : 124,
-      "modifierFlags" : 786432
+      "modifierFlags" : 1572864
     },
     "nudgeUp" : {
       "keyCode" : 126,
-      "modifierFlags" : 786432
+      "modifierFlags" : 1572864
     },
     "prevDisplayRatio" : {
       "keyCode" : 115,
       "modifierFlags" : 1835008
+    },
+    "topLeft" : {
+      "keyCode" : 126,
+      "modifierFlags" : 786432
+    },
+    "topRight" : {
+      "keyCode" : 124,
+      "modifierFlags" : 786432
     }
   },
-  "timestamp" : 809900789.935683,
-  "version" : "232"
+  "timestamp" : 810953718.25182,
+  "version" : "227"
 }
