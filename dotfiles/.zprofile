@@ -1,3 +1,7 @@
+# The following lines were added by Docker Desktop to add commands to your PATH.
+export PATH="$PATH:/Users/nathandemasie/.docker/bin"
+# End of Docker Desktop section.
+
 ## Setup bash completion PATH, MANPATH, etc., for Homebrew.
 # eval "$(/opt/homebrew/bin/brew shellenv)"
 # source /opt/homebrew/etc/profile.d/bash_completion.sh
